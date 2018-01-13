@@ -90,3 +90,14 @@
     placeholder: 'sk_Hoz3tEXcZaO50jahb9xzhn7b',
     value: settings.liveSecretKey})
 }}
+
+<hr>
+
+<h2 class="first">{{ 'Webhooks'|t }}</h2>
+
+{{ forms.textField({
+    first: true,
+    label: 'Endpoint',
+    instructions: 'Use this URL when setting up your Stripe webhook.',
+    value: siteUrl ~ 'actions/stripe-checkout/webhook'})
+}}
