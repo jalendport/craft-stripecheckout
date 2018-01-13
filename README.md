@@ -42,6 +42,10 @@ Your test publishable & secret keys sourced from your Stripe dashboard.
 
 Your live publishable & secret keys sourced from your Stripe dashboard.
 
+#### Stripe Webhook
+
+For Stripe Checkout to function properly, you will need to create a Stripe webhook from within the Stripe Dashboard. Simply fire all Stripe events to `https://www.yoursite.com/actions/stripe-checkout/webhook`
+
 ## Using Stripe
 
 #### Setup
