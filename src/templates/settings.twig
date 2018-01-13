@@ -1,0 +1,92 @@
+{#
+/**
+ * Stripe Checkout plugin for Craft CMS 3.x
+ *
+ * Stripe Checkout settings.twig
+ *
+ * @author    Luke Youell
+ * @copyright Copyright (c) 2017 Luke Youell
+ * @link      https://github.com/lukeyouell
+ * @package   StripeCheckout
+ * @since     1.0.0
+ */
+#}
+
+{% import '_includes/forms' as forms %}
+
+<h2 class="first">{{ 'General Settings'|t }}</h2>
+
+{{ forms.selectField({
+    first: true,
+    label: 'Account Mode',
+    id: 'accountMode',
+    name: 'accountMode',
+    options: {
+      test: 'Test',
+      live: 'Live'
+    },
+    value: settings.accountMode})
+}}
+
+{{ forms.selectField({
+    label: 'Default Currency',
+    id: 'defaultCurrency',
+    name: 'defaultCurrency',
+    options: {
+      AUD: 'AUD - Australian Dollars',
+      CAD: 'CAD - Canadian Dollars',
+      CHF: 'CHF - Swiss Franc',
+      DKK: 'DKK - Danish Krone',
+      EUR: 'EUR - Euro',
+      GBP: 'GBP - British Pound Sterling',
+      HKD: 'HKD - Hong Kong Dollar',
+      JPY: 'JPY - Japanese Yen',
+      NOK: 'NOK - Norwegian Krone',
+      NZD: 'NZD - New Zealand Dollar',
+      SEK: 'SEK - Swedish Krona',
+      USD: 'USD - American Dollar',
+    },
+    value: settings.defaultCurrency})
+}}
+
+<hr>
+
+<h2 class="first">{{ 'Test Credentials'|t }}</h2>
+
+{{ forms.textField({
+    first: true,
+    label: 'Publishable Key',
+    id: 'testPublishableKey',
+    name: 'testPublishableKey',
+    placeholder: 'pk_test_Hoz3tEXcZaO50jahb9xzhn7b',
+    value: settings.testPublishableKey})
+}}
+
+{{ forms.textField({
+    label: 'Secret Key',
+    id: 'testSecretKey',
+    name: 'testSecretKey',
+    placeholder: 'sk_test_Hoz3tEXcZaO50jahb9xzhn7b',
+    value: settings.testSecretKey})
+}}
+
+<hr>
+
+<h2 class="first">{{ 'Live credentials'|t }}</h2>
+
+{{ forms.textField({
+    first: true,
+    label: 'Publishable Key',
+    id: 'livePublishableKey',
+    name: 'livePublishableKey',
+    placeholder: 'pk_Hoz3tEXcZaO50jahb9xzhn7b',
+    value: settings.livePublishableKey})
+}}
+
+{{ forms.textField({
+    label: 'Secret Key',
+    id: 'liveSecretKey',
+    name: 'liveSecretKey',
+    placeholder: 'sk_Hoz3tEXcZaO50jahb9xzhn7b',
+    value: settings.liveSecretKey})
+}}

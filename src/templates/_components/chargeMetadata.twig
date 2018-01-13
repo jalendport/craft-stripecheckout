@@ -1,0 +1,20 @@
+<h2 class="stripe-heading">{{ 'Metadata'|t }}</h2>
+
+<div class="stripe-callout stripe-details">
+
+  <div class="grid-x">
+
+    {% for key, val in metadata %}
+
+      <div class="large-4 medium-6 cell">
+        <div class="stripe-data">{{ key }}</div>
+      </div>
+      <div class="large-8 medium-6 cell">
+        <div class="stripe-value">{{ val }}</div>
+      </div>
+
+    {% endfor %}
+
+  </div>
+
+</div>

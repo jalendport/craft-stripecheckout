@@ -1,0 +1,48 @@
+{% import '_includes/forms' as forms %}
+
+<form class="modal fitted" id="refundModal" style="display:none">
+
+  <header class="header">
+
+    <h2>Refund payment</h2>
+
+  </header>
+
+  <div class="body">
+
+    {{ forms.textField({
+        first: true,
+        label: 'Amount',
+        placeholder: '0.00'})
+    }}
+
+    {{ forms.selectField({
+        label: 'Reason',
+        options: {
+          duplicate: 'Duplicate'|t,
+          fraudulent: 'Fraudulent'|t,
+          requested_by_customer: 'Requested by customer'|t,
+        }})
+    }}
+
+  </div>
+
+  <footer class="footer">
+
+    <div class="buttons right">
+
+      <input class="btn submit" value="Refund" type="submit">
+
+    </div>
+
+  </footer>
+
+</form>
+
+{% js %}
+
+$('.refund-modal-trigger').on('click', function() {
+  new Garnish.Modal('#refundModal');
+});
+
+{% endjs %}

@@ -1,0 +1,75 @@
+<h2 class="stripe-heading">{{ 'Payment details'|t }}</h2>
+
+<div class="stripe-callout stripe-details">
+
+  <div class="grid-x">
+
+    <div class="large-4 medium-6 cell">
+      <div class="stripe-data">{{ 'ID'|t }}</div>
+    </div>
+    <div class="large-8 medium-6 cell">
+      <div class="stripe-value">{{ charge.stripeId }}</div>
+    </div>
+
+    <div class="large-4 medium-6 cell">
+      <div class="stripe-data">{{ 'Status'|t }}</div>
+    </div>
+    <div class="large-8 medium-6 cell">
+      <div class="stripe-value">
+        <span class="stripe-label stripe-label-{{
+          charge.status == 'succeeded' ? 'success' :
+          charge.status == 'pending' ? 'warning' :
+          charge.status == 'failed' ? 'alert' :
+          'secondary'
+        }}">
+          {{ charge.status|capitalize }}
+        </span>
+      </div>
+    </div>
+
+    {% if charge.failureMessage %}
+
+      <div class="large-4 medium-6 cell">
+        <div class="stripe-data">{{ 'Reason'|t }}</div>
+      </div>
+      <div class="large-8 medium-6 cell">
+        <div class="stripe-value">{{ charge.failureMessage }}</div>
+      </div>
+
+    {% endif %}
+
+    <div class="large-4 medium-6 cell">
+      <div class="stripe-data">{{ 'Amount'|t }}</div>
+    </div>
+    <div class="large-8 medium-6 cell">
+      <div class="stripe-value">{{ (charge.amount / 100)|number_format(2, '.', ',') ~ ' ' ~ charge.currency|upper }}</div>
+    </div>
+
+    {% if charge.amountRefunded > 0 %}
+
+      <div class="large-4 medium-6 cell">
+        <div class="stripe-data">{{ 'Refunded'|t }}</div>
+      </div>
+      <div class="large-8 medium-6 cell">
+        <div class="stripe-value">{{ (charge.amountRefunded / 100)|number_format(2, '.', ',') ~ ' ' ~ charge.currency|upper }}</div>
+      </div>
+
+    {% endif %}
+
+    <div class="large-4 medium-6 cell">
+      <div class="stripe-data">{{ 'Email'|t }}</div>
+    </div>
+    <div class="large-8 medium-6 cell">
+      <div class="stripe-value"><a href="mailto:{{ charge.email }}">{{ charge.email }}</a></div>
+    </div>
+
+    <div class="large-4 medium-6 cell">
+      <div class="stripe-data">{{ 'Description'|t }}</div>
+    </div>
+    <div class="large-8 medium-6 cell">
+      <div class="stripe-value">{{ charge.description ? charge.description : 'Undefined'|t }}</div>
+    </div>
+
+  </div>
+
+</div>

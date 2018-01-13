@@ -1,0 +1,49 @@
+{% if refunds %}
+
+  <h2 class="stripe-heading">{{ 'Refunds'|t }}</h2>
+
+  <div class="stripe-callout stripe-callout-secondary stripe-details">
+
+    {% for refund in refunds %}
+
+      <div class="stripe-callout">
+
+        <div class="grid-x">
+
+          <div class="large-4 medium-6 cell">
+            <div class="stripe-data">{{ 'ID'|t }}</div>
+          </div>
+          <div class="large-8 medium-6 cell">
+            <div class="stripe-value">{{ refund.id }}</div>
+          </div>
+
+          <div class="large-4 medium-6 cell">
+            <div class="stripe-data">{{ 'Created'|t }}</div>
+          </div>
+          <div class="large-8 medium-6 cell">
+            <div class="stripe-value">{{ refund.created|date('Y/m/d H:i') }}</div>
+          </div>
+
+          <div class="large-4 medium-6 cell">
+            <div class="stripe-data">{{ 'Amount'|t }}</div>
+          </div>
+          <div class="large-8 medium-6 cell">
+            <div class="stripe-value">{{ (refund.amount / 100)|number_format(2, '.', ',') ~ ' ' ~ refund.currency|upper }}</div>
+          </div>
+
+          <div class="large-4 medium-6 cell">
+            <div class="stripe-data">{{ 'Reason'|t }}</div>
+          </div>
+          <div class="large-8 medium-6 cell">
+            <div class="stripe-value">{{ refund.reason ? refund.reason|replace({'_': ' '})|capitalize : 'Undefined'|t }}</div>
+          </div>
+
+        </div>
+
+      </div>
+
+    {% endfor %}
+
+  </div>
+
+{% endif %}

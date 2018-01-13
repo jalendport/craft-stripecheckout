@@ -1,0 +1,125 @@
+{#
+/**
+ * Stripe Checkout plugin for Craft CMS 3.x
+ *
+ * Stripe Checkout index.twig
+ *
+ * @author    Luke Youell
+ * @copyright Copyright (c) 2017 Luke Youell
+ * @link      https://github.com/lukeyouell
+ * @package   StripeCheckout
+ * @since     1.0.0
+ */
+#}
+
+{% requireAdmin %}
+
+{% extends '_layouts/cp' %}
+
+{% set title = 'Stripe Charges'|t %}
+
+{% set charges = craft.stripeCheckout.getCharges() %}
+
+{% block actionButton %}
+
+    <span class="btn" onClick="window.location.reload()">{{ 'Refresh'|t }}</span>
+
+{% endblock %}
+
+{% block content %}
+
+  {% if charges|length %}
+
+    <div class="tableview">
+
+      <table class="data fullwidth collapsible">
+
+        <thead>
+
+          <tr>
+
+            <th scope="col">{{ 'Amount'|t }}</th>
+            <th scope="col">{{ 'Email'|t }}</th>
+            <th scope="col" class="ordered desc">{{ 'Created' }}</th>
+            <th scope="col">{{ 'Updated' }}</th>
+            <th scope="col" data-icon="tag" title="{{ 'Paid'|t }}"></th>
+            <th scope="col" data-icon="refresh" title="{{ 'Refunded'|t }}"></th>
+            <th scope="col" data-icon="tool" title="{{ 'Mode'|t }}"></th>
+            <th scope="col" data-icon="view" title="{{ 'View'|t }}"></th>
+            <th scope="col" data-icon="share" title="{{ 'View on Stripe'|t }}"></th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          {% for charge in charges %}
+
+            <tr data-id="{{ charge.stripeId }}">
+
+              <td>
+                <span class="status {{
+                  charge.status == 'succeeded' ? 'green' :
+                  charge.status == 'failed' ? 'red' :
+                  'light' }}"></span>
+                <a href="{{ url('stripe-checkout/charge/' ~ charge.id) }}">
+                  {{ (charge.amount / 100)|number_format(2, '.', ',') }} {{ charge.currency|upper }}
+                </a>
+              </td>
+              <td>
+                {{ charge.email }}
+              </td>
+              <td>
+                {{ charge.dateCreated|date('Y/m/d H:i') }}
+              </td>
+              <td>
+                {{ charge.dateUpdated|date('Y/m/d H:i') }}
+              </td>
+              <td>
+                <span class="status {{
+                  charge.paid ? 'green' :
+                  'light' }}" title="{{
+                  charge.paid ? 'Paid'|t :
+                  'Pending payment'|t }}"></span>
+              </td>
+              <td>
+                <span class="status {{
+                  charge.refunded ? 'green' :
+                  charge.amountRefunded > 0 ? 'grey' :
+                  'light' }}" title="{{
+                  charge.refunded ? 'Refunded'|t :
+                  charge.amountRefunded > 0 ? 'Partially refunded'|t :
+                  'Not refunded'|t }}"></span>
+              </td>
+              <td>
+                <span class="status {{
+                  charge.live ? 'green' :
+                  'orange' }}" title="{{
+                  charge.live ? 'Live'|t :
+                  'Test'|t }}"></span>
+              </td>
+              <td>
+                <a href="{{ url('stripe-checkout/charge/' ~ charge.id) }}" data-icon="view" title="{{ 'View'|t }}"></a>
+              </td>
+              <td>
+                <a href="{{ url('https://dashboard.stripe.com/test/payments/' ~ charge.stripeId) }}" target="_blank" data-icon="share" title="{{ 'View on Stripe'|t }}"></a>
+              </td>
+
+            </tr>
+
+          {% endfor %}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  {% else %}
+
+    <h3>{{ 'No Charges Found'|t }}</h3>
+
+  {% endif %}
+
+{% endblock %}

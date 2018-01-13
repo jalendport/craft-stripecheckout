@@ -1,0 +1,49 @@
+{
+    "name": "lukeyouell/craft3-stripecheckout",
+    "description": "Bringing the power of Stripe Checkout to your Craft templates.",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "stripe",
+        "stripe-checkout"
+    ],
+    "support": {
+        "docs": "https://github.com/lukeyouell/craft3-stripecheckout/blob/master/README.md",
+        "issues": "https://github.com/lukeyouell/craft3-stripecheckout/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luke Youell",
+            "homepage": "https://github.com/lukeyouell"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1",
+        "stripe/stripe-php": "^5.8.0"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+          "lukeyouell\\stripecheckout\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Stripe Checkout",
+        "handle": "stripe-checkout",
+        "schemaVersion": "1.0.0",
+        "hasCpSettings": true,
+        "hasCpSection": true,
+        "changelogUrl": "https://raw.githubusercontent.com/lukeyouell/craft3-stripecheckout/master/CHANGELOG.md",
+        "class": "lukeyouell\\stripecheckout\\StripeCheckout"
+    }
+}

@@ -1,0 +1,29 @@
+<h2 class="stripe-heading">{{ 'Shipping'|t }}</h2>
+
+<div class="stripe-callout stripe-details">
+
+  <div class="grid-x">
+
+    <div class="large-4 medium-6 cell">
+      <div class="stripe-data">{{ 'Recipient'|t }}</div>
+    </div>
+    <div class="large-8 medium-6 cell">
+      <div class="stripe-value">{{ shipping.name }}</div>
+    </div>
+
+    <div class="large-4 medium-6 cell">
+      <div class="stripe-data">{{ 'Address'|t }}</div>
+    </div>
+    <div class="large-8 medium-6 cell">
+      <div class="stripe-value">
+        {{ shipping.address.line1 ? (shipping.address.line1 ~ '<br>')|raw }}
+        {{ shipping.address.line2 ? (shipping.address.line2 ~ '<br>')|raw }}
+        {{ shipping.address.city ? (shipping.address.city ~ '<br>')|raw }}
+        {{ shipping.address.postal_code ? (shipping.address.postal_code ~ '<br>')|raw }}
+        {{ shipping.address.country ? shipping.address.country }}
+      </div>
+    </div>
+
+  </div>
+
+</div>
