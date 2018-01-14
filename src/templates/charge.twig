@@ -29,7 +29,7 @@
   {% set shipping = craft.stripeCheckout.decode(charge.shipping) %}
 
   {% set crumbs = {
-    0: { label: 'Stripe Payments'|t, url: url('stripe') }
+    0: { label: 'Stripe Checkout'|t, url: url('stripe-checkout') }
   } %}
 
   {% set title = (charge.amount / 100)|number_format(2, '.', ',') ~ ' ' ~ charge.currency|upper %}
