@@ -20,7 +20,7 @@ To install the plugin, follow these instructions.
 
         composer require lukeyouell/craft3-stripecheckout
 
-3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Stripe.
+3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Stripe Checkout.
 
 ## Stripe Checkout Overview
 
