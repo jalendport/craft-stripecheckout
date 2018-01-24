@@ -12,8 +12,8 @@
         "stripe-checkout"
     ],
     "support": {
-        "docs": "https://github.com/lukeyouell/craft-stripecheckout/blob/master/README.md",
-        "issues": "https://github.com/lukeyouell/craft-stripecheckout/issues"
+        "docs": "https://github.com/lukeyouell/craft3-stripecheckout/blob/master/README.md",
+        "issues": "https://github.com/lukeyouell/craft3-stripecheckout/issues"
     },
     "license": "MIT",
     "authors": [
@@ -43,7 +43,7 @@
         "schemaVersion": "1.0.0",
         "hasCpSettings": true,
         "hasCpSection": true,
-        "changelogUrl": "https://raw.githubusercontent.com/lukeyouell/craft-stripecheckout/master/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/lukeyouell/craft3-stripecheckout/master/CHANGELOG.md",
         "class": "lukeyouell\\stripecheckout\\StripeCheckout"
     }
 }
