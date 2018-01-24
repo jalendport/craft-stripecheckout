@@ -2,11 +2,6 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
-
-### Changed
-- Github repo name from `craft3-stripecheckout` to `craft-stripecheckout`
-
 ## 1.0.2 - 2018-01-14
 
 ### Changed
