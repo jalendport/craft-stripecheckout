@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Changed
+- Set Craft CMS minimum requirement to `^3.0.0-RC11`
+- Set Stripe minimum requirement to `^5.9.2`
+
 ## 1.0.2 - 2018-01-14
 
 ### Changed
