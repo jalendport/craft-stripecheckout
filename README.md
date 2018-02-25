@@ -1,3 +1,5 @@
+<img src="src/icon.svg" alt="icon" width="100" height="100">
+
 # Stripe Checkout plugin for Craft CMS 3.x
 
 Bringing the power of Stripe Checkout to your Craft templates.
@@ -6,7 +8,7 @@ Bringing the power of Stripe Checkout to your Craft templates.
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0-RC1 or later.
+This plugin requires Craft CMS 3.0.0-RC11 or later.
 
 ## Installation
 
