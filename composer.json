@@ -23,8 +23,8 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^3.0.0-RC1",
-        "stripe/stripe-php": "^5.8.0"
+        "craftcms/cms": "^3.0.0-RC11",
+        "stripe/stripe-php": "^5.9.2"
     },
     "repositories": [
         {
