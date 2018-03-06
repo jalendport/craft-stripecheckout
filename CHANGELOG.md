@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.4 - 2018-03-06
+
+### Fixed
+- Issue retrieving charges within prefixed tables
+
 ## 1.0.3 - 2018-02-26
 
 ### Changed
