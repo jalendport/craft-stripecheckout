@@ -24,12 +24,12 @@ class RecordService extends Component
 {
     public static function getCharges()
     {
-        return \Craft::$app->db->createCommand('SELECT * FROM stripecheckout_charges ORDER BY dateCreated DESC')->queryAll();
+        return \Craft::$app->db->createCommand('SELECT * FROM {{%stripecheckout_charges}} ORDER BY dateCreated DESC')->queryAll();
     }
 
     public static function getChargeById($id)
     {
-        return \Craft::$app->db->createCommand('SELECT * FROM stripecheckout_charges WHERE id = '.$id)->queryOne();
+        return \Craft::$app->db->createCommand('SELECT * FROM {{%stripecheckout_charges}} WHERE id = '.$id)->queryOne();
     }
 
     public static function insertCharge($data)
