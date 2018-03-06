@@ -2,7 +2,7 @@
     "name": "lukeyouell/craft3-stripecheckout",
     "description": "Bringing the power of Stripe Checkout to your Craft templates.",
     "type": "craft-plugin",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "keywords": [
         "craft",
         "cms",
