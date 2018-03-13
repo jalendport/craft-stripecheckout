@@ -165,5 +165,6 @@ The Stripe charge object is passed as flash data and can be accessed by using th
 Some things to do, and ideas for potential features:
 
 - Refunds from the CP
+- Multi environment support
 
 Brought to you by [Luke Youell](https://github.com/lukeyouell)
