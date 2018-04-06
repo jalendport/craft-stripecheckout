@@ -15,6 +15,7 @@ use lukeyouell\stripecheckout\StripeCheckout;
 use Craft;
 use craft\base\Component;
 use lukeyouell\stripecheckout\services\ChargeService;
+use lukeyouell\stripecheckout\events\saveEvent;
 
 /**
  * @author    Luke Youell
@@ -23,11 +24,23 @@ use lukeyouell\stripecheckout\services\ChargeService;
  */
 class ChargeService extends Component
 {
+    
+    const EVENT_BEFORE_SAVE = 'beforeSave';
+    const EVENT_AFTER_SAVE = 'afterSave';
+
+
+    
     // Public Methods
     // =========================================================================
 
     public static function createCharge($request)
     {
+        $event = new SaveEvent([
+            'data' => $request
+        ]);
+        $self = new static;
+        $self->trigger(self::EVENT_BEFORE_SAVE, $event);
+
         $settings = StripeCheckout::$plugin->getSettings();
         $secretKey = $settings->accountMode === 'live' ? $settings->liveSecretKey : $settings->testSecretKey;
         \Stripe\Stripe::setApiKey($secretKey);
@@ -58,6 +71,12 @@ class ChargeService extends Component
           $response['message'] = $e->getMessage();
         }
 
+        $event = new SaveEvent([
+            'data' => $request,
+            'record' => $response
+        ]);
+        $self = new static;
+        $self->trigger(self::EVENT_AFTER_SAVE, $event);
         return $response;
     }
 }
