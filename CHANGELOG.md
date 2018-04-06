@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.5 - 2018-04-06
+
+### Added
+- added `beforeSave` and `afterSave` events to the Charge Service (credit [@cole007](https://github.com/cole007))
+
 ## 1.0.4 - 2018-03-06
 
 ### Fixed
