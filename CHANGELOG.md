@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.6 - 2018-04-09
+
+### Changed
+- `{{ csrfInput() }}` added to docs
+
+### Fixed
+- Require admin no longer enforced in templates
+
 ## 1.0.5 - 2018-04-06
 
 ### Added
