@@ -63,6 +63,7 @@ Setting up Stripe Checkout is very similar to using Stripe.js, except for the fo
 ```twig
 <form action="" method="post">
 
+  {{ csrfInput() }}
   <input type="hidden" name="action" value="stripe-checkout/charge">
   <input type="hidden" name="redirect" value="{{ 'success?status={status}&id={id}'|hash }}">
 
@@ -113,6 +114,7 @@ It's possible to pass additional data as charge metadata, simply supply the inpu
 ```twig
 <form action="" method="post">
 
+  {{ csrfInput() }}
   <input type="hidden" name="action" value="stripe-checkout/charge">
   <input type="hidden" name="redirect" value="{{ 'success?status={status}&id={id}'|hash }}">
 
