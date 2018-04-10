@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.7 - 2018-04-10
+
+### Changed
+- Renamed the composer package name to `craft-stripecheckout`
+- Set Craft CMS minimum requirement to `^3.0.1`
+- Set Stripe minimum requirement to `^6.5.0`
+
 ## 1.0.6 - 2018-04-09
 
 ### Changed
