@@ -1,5 +1,5 @@
 {
-    "name": "lukeyouell/craft3-stripecheckout",
+    "name": "lukeyouell/craft-stripecheckout",
     "description": "Bringing the power of Stripe Checkout to your Craft templates.",
     "type": "craft-plugin",
     "version": "1.0.6",
@@ -12,8 +12,8 @@
         "stripe-checkout"
     ],
     "support": {
-        "docs": "https://github.com/lukeyouell/craft3-stripecheckout/blob/master/README.md",
-        "issues": "https://github.com/lukeyouell/craft3-stripecheckout/issues"
+        "docs": "https://github.com/lukeyouell/craft-stripecheckout/blob/master/README.md",
+        "issues": "https://github.com/lukeyouell/craft-stripecheckout/issues"
     },
     "license": "MIT",
     "authors": [
