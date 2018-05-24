@@ -100,7 +100,7 @@ class Charge extends Element
             'status'      => 'green',
             'label'       => 'Live',
             'criteria'    => [
-                'chargeStatus' => 'live',
+                'live' => true,
             ],
             'defaultSort' => ['dateCreated', 'desc'],
         ];
@@ -110,7 +110,7 @@ class Charge extends Element
             'status'      => 'orange',
             'label'       => 'Test',
             'criteria'    => [
-                'chargeStatus' => 'test',
+                'live' => false,
             ],
             'defaultSort' => ['dateCreated', 'desc'],
         ];
