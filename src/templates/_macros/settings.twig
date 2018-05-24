@@ -1,0 +1,7 @@
+{% macro configWarning(setting) -%}
+  {% set setting = '<code>' ~ setting ~ '</code>' %}
+  {{ 'This is being overridden by the {setting} config setting in your {file} config file.'|t('stripe-checkout', {
+        setting: setting,
+        file:    'stripe-checkout.php'
+  })|raw }}
+{%- endmacro %}
