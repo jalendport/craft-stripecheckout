@@ -77,6 +77,20 @@ class Charge extends Element
         return false;
     }
 
+    public static function hasStatuses(): bool
+    {
+        return true;
+    }
+
+    public static function statuses(): array
+    {
+        return [
+            'green'  => 'Succeeded',
+            'orange' => 'Pending',
+            'red'    => 'Failed',
+        ];
+    }
+
     public static function find(): ElementQueryInterface
     {
         return new ChargeQuery(static::class);
@@ -261,7 +275,19 @@ class Charge extends Element
 
     public function getStatus()
     {
-        return $this->chargeStatus;
+        switch ($this->chargeStatus) {
+            case 'succeeded':
+                return 'green';
+
+            case 'pending':
+                return 'orange';
+
+            case 'failed':
+                return 'red';
+
+            default:
+                return 'orange';
+        }
     }
 
     public function getFormattedAmount()
