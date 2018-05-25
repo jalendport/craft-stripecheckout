@@ -30,7 +30,7 @@ class ChargeService extends Component
     {
         $response = $this->createStripeCharge($request);
 
-        if ((!isset($response['charge']) or (is_string($response['charge'])))) {
+        if ((!isset($response['charge'])) or (isset($response['message']))) {
             return $response;
         }
 
@@ -79,31 +79,31 @@ class ChargeService extends Component
     public function insertCharge($stripeCharge = null)
     {
         if ($stripeCharge) {
-          $charge = new Charge();
+            $charge = new Charge();
 
-          $charge->stripeId       = $stripeCharge->id ?? null;
-          $charge->email          = $stripeCharge->receipt_email ?? null;
-          $charge->live           = $stripeCharge->livemode ?? null;
-          $charge->chargeStatus   = $stripeCharge->status ?? null;
-          $charge->paid           = $stripeCharge->paid ?? null;
-          $charge->refunded       = $stripeCharge->refunded ?? null;
-          $charge->amount         = $stripeCharge->amount ?? null;
-          $charge->amountRefunded = $stripeCharge->amount_refunded ?? null;
-          $charge->currency       = $stripeCharge->currency ?? null;
-          $charge->description    = $stripeCharge->description ?? null;
-          $charge->source         = $stripeCharge->source ? Json::encode($stripeCharge->source) : null;
-          $charge->refunds        = $stripeCharge->refunds ? Json::encode($stripeCharge->refunds->data) : null;
-          $charge->shipping       = $stripeCharge->shipping ? Json::encode($stripeCharge->shipping) : null;
-          $charge->metadata       = $stripeCharge->metadata ? Json::encode($stripeCharge->metadata) : null;
-          $charge->outcome        = $stripeCharge->outcome ? Json::encode($stripeCharge->outcome) : null;
-          $charge->failureCode    = $stripeCharge->failure_code ?? null;
-          $charge->failureMessage = $stripeCharge->failure_message ?? null;
+            $charge->stripeId       = $stripeCharge->id ?? null;
+            $charge->email          = $stripeCharge->receipt_email ?? null;
+            $charge->live           = $stripeCharge->livemode ?? null;
+            $charge->chargeStatus   = $stripeCharge->status ?? null;
+            $charge->paid           = $stripeCharge->paid ?? null;
+            $charge->refunded       = $stripeCharge->refunded ?? null;
+            $charge->amount         = $stripeCharge->amount ?? null;
+            $charge->amountRefunded = $stripeCharge->amount_refunded ?? null;
+            $charge->currency       = $stripeCharge->currency ?? null;
+            $charge->description    = $stripeCharge->description ?? null;
+            $charge->source         = $stripeCharge->source ? Json::encode($stripeCharge->source) : null;
+            $charge->refunds        = $stripeCharge->refunds ? Json::encode($stripeCharge->refunds->data) : null;
+            $charge->shipping       = $stripeCharge->shipping ? Json::encode($stripeCharge->shipping) : null;
+            $charge->metadata       = $stripeCharge->metadata ? Json::encode($stripeCharge->metadata) : null;
+            $charge->outcome        = $stripeCharge->outcome ? Json::encode($stripeCharge->outcome) : null;
+            $charge->failureCode    = $stripeCharge->failure_code ?? null;
+            $charge->failureMessage = $stripeCharge->failure_message ?? null;
 
-          $res = Craft::$app->getElements()->saveElement($charge, true, false);
+            $res = Craft::$app->getElements()->saveElement($charge, true, false);
 
-          if ($res) {
-              return $charge;
-          }
+            if ($res) {
+                return $charge;
+            }
         }
 
         return null;
@@ -112,30 +112,34 @@ class ChargeService extends Component
     public function updateCharge($stripeCharge = null)
     {
         if ($stripeCharge) {
-          $charge = $this->getChargeByStripeId($stripeCharge->id);
+            $charge = $this->getChargeByStripeId($stripeCharge->id);
 
-          $charge->email          = $stripeCharge->receipt_email ?? null;
-          $charge->live           = $stripeCharge->livemode ?? null;
-          $charge->chargeStatus   = $stripeCharge->status ?? null;
-          $charge->paid           = $stripeCharge->paid ?? null;
-          $charge->refunded       = $stripeCharge->refunded ?? null;
-          $charge->amount         = $stripeCharge->amount ?? null;
-          $charge->amountRefunded = $stripeCharge->amount_refunded ?? null;
-          $charge->currency       = $stripeCharge->currency ?? null;
-          $charge->description    = $stripeCharge->description ?? null;
-          $charge->source         = $stripeCharge->source ? Json::encode($stripeCharge->source) : null;
-          $charge->refunds        = $stripeCharge->refunds ? Json::encode($stripeCharge->refunds->data) : null;
-          $charge->shipping       = $stripeCharge->shipping ? Json::encode($stripeCharge->shipping) : null;
-          $charge->metadata       = $stripeCharge->metadata ? Json::encode($stripeCharge->metadata) : null;
-          $charge->outcome        = $stripeCharge->outcome ? Json::encode($stripeCharge->outcome) : null;
-          $charge->failureCode    = $stripeCharge->failure_code ?? null;
-          $charge->failureMessage = $stripeCharge->failure_message ?? null;
+            if (!$charge) {
+                return null;
+            }
 
-          $res = Craft::$app->getElements()->saveElement($charge, true, false);
+            $charge->email          = $stripeCharge->receipt_email ?? null;
+            $charge->live           = $stripeCharge->livemode ?? null;
+            $charge->chargeStatus   = $stripeCharge->status ?? null;
+            $charge->paid           = $stripeCharge->paid ?? null;
+            $charge->refunded       = $stripeCharge->refunded ?? null;
+            $charge->amount         = $stripeCharge->amount ?? null;
+            $charge->amountRefunded = $stripeCharge->amount_refunded ?? null;
+            $charge->currency       = $stripeCharge->currency ?? null;
+            $charge->description    = $stripeCharge->description ?? null;
+            $charge->source         = $stripeCharge->source ? Json::encode($stripeCharge->source) : null;
+            $charge->refunds        = $stripeCharge->refunds ? Json::encode($stripeCharge->refunds->data) : null;
+            $charge->shipping       = $stripeCharge->shipping ? Json::encode($stripeCharge->shipping) : null;
+            $charge->metadata       = $stripeCharge->metadata ? Json::encode($stripeCharge->metadata) : null;
+            $charge->outcome        = $stripeCharge->outcome ? Json::encode($stripeCharge->outcome) : null;
+            $charge->failureCode    = $stripeCharge->failure_code ?? null;
+            $charge->failureMessage = $stripeCharge->failure_message ?? null;
 
-          if ($res) {
-              return $charge;
-          }
+            $res = Craft::$app->getElements()->saveElement($charge, true, false);
+
+            if ($res) {
+                return $charge;
+            }
         }
 
         return null;

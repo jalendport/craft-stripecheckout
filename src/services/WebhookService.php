@@ -55,8 +55,11 @@ class WebhookService extends Component
                 case 'charge.captured':
                 case 'charge.refunded':
                 case 'charge.succeeded':
-                case 'charge.failed':
                     return StripeCheckout::getInstance()->chargeService->updateCharge($charge);
+                    break;
+
+                case 'charge.failed':
+                    return StripeCheckout::getInstance()->chargeService->insertCharge($charge);
                     break;
             }
         }
