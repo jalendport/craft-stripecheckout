@@ -18,6 +18,7 @@ use craft\base\Element;
 use craft\elements\actions\Delete;
 use craft\elements\db\ElementQuery;
 use craft\elements\db\ElementQueryInterface;
+use craft\helpers\Json;
 use craft\helpers\UrlHelper;
 
 class Charge extends Element
@@ -229,6 +230,17 @@ class Charge extends Element
 
     // Public Methods
     // =========================================================================
+
+    public function init()
+    {
+        parent::init();
+
+        $this->source = Json::decode($this->source);
+        $this->refunds = Json::decode($this->refunds);
+        $this->shipping = Json::decode($this->shipping);
+        $this->metadata = Json::decode($this->metadata);
+        $this->outcome = Json::decode($this->outcome);
+    }
 
     public function __toString()
     {
