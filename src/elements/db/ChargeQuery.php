@@ -194,6 +194,50 @@ class ChargeQuery extends ElementQuery
             'stripecheckout_charges.failureCode',
         ]);
 
+        if ($this->stripeId) {
+            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.stripeId', $this->stripeId));
+        }
+
+        if ($this->email) {
+            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.email', $this->email));
+        }
+
+        if ($this->live) {
+            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.live', $this->live));
+        }
+
+        if ($this->chargeStatus) {
+            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.chargeStatus', $this->chargeStatus));
+        }
+
+        if ($this->paid) {
+            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.paid', $this->paid));
+        }
+
+        if ($this->refunded) {
+            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.refunded', $this->refunded));
+        }
+
+        if ($this->amount) {
+            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.amount', $this->amount));
+        }
+
+        if ($this->amountRefunded) {
+            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.amountRefunded', $this->amountRefunded));
+        }
+
+        if ($this->currency) {
+            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.currency', $this->currency));
+        }
+
+        if ($this->description) {
+            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.description', $this->description));
+        }
+
+        if ($this->failureCode) {
+            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.failureCode', $this->failureCode));
+        }
+
         return parent::beforePrepare();
     }
 }

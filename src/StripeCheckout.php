@@ -66,6 +66,7 @@ class StripeCheckout extends Plugin
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
             function (RegisterUrlRulesEvent $event) {
                 $event->rules['stripe-checkout/charges'] = 'stripe-checkout/charges/index';
+                $event->rules['stripe-checkout/charges/<id:\d+>'] = 'stripe-checkout/charges/view';
 
                 $event->rules['stripe-checkout/settings/general'] = 'stripe-checkout/settings/index';
                 $event->rules['stripe-checkout/settings/credentials'] = 'stripe-checkout/credentials/index';
@@ -108,6 +109,7 @@ class StripeCheckout extends Plugin
             'chargeService'   => \lukeyouell\stripecheckout\services\ChargeService::class,
             'checkoutService' => \lukeyouell\stripecheckout\services\CheckoutService::class,
             'settingsService' => \lukeyouell\stripecheckout\services\SettingsService::class,
+            'webhookService'  => \lukeyouell\stripecheckout\services\WebhookService::class,
         ]);
 
         Craft::info(

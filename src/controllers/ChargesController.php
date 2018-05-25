@@ -15,6 +15,8 @@ use lukeyouell\stripecheckout\StripeCheckout;
 use Craft;
 use craft\web\Controller;
 
+use yii\web\NotFoundHttpException;
+
 class ChargesController extends Controller
 {
     // Public Methods
@@ -23,5 +25,21 @@ class ChargesController extends Controller
     public function actionIndex()
     {
         return $this->renderTemplate('stripe-checkout/_charges/index');
+    }
+
+    public function actionView($id = null)
+    {
+        $charge = StripeCheckout::getInstance()->chargeService->getChargeById($id);
+
+        if (!$charge) {
+            throw new NotFoundHttpException('Charge not found (#'.$id.')');
+        }
+
+        $variables = [
+            'title'  => $charge->formattedAmount,
+            'charge' => $charge,
+        ];
+
+        return $this->renderTemplate('stripe-checkout/_charges/charge', $variables);
     }
 }

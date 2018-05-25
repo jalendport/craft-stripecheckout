@@ -57,28 +57,21 @@ class ChargeController extends Controller
 
         $response = StripeCheckout::getInstance()->chargeService->createCharge($stripeRequest);
 
-        if (!$response->id) {
+        if (!isset($response->id)) {
             if ($request->getAcceptsJson()) {
-                return $this->asJson([
-                    'success' => false,
-                    'message' => $response['message'] ?? null,
-                ]);
+                return $this->asJson($response);
             }
 
+            Craft::$app->session->setFlash('errors', $response);
             Craft::$app->getSession()->setError('Couldn’t create the charge.');
+        } else {
+            if ($request->getAcceptsJson()) {
+                return $this->asJson($response);
+            }
 
-            return null;
+            Craft::$app->session->setFlash('charge', $response);
+            Craft::$app->getSession()->setNotice('Charge created.');
         }
-
-        if ($request->getAcceptsJson()) {
-            return $this->asJson([
-                'success' => true,
-                'charge'  => $response,
-            ]);
-        }
-
-        Craft::$app->session->setFlash('charge', $response);
-        Craft::$app->getSession()->setNotice('Charge created.');
 
         return $this->redirectToPostedUrl();
     }

@@ -137,7 +137,6 @@ class Charge extends Element
     protected static function defineTableAttributes(): array
     {
         $attributes = [
-            'id'          => ['label' => Craft::t('stripe-checkout', 'ID')],
             'amount'      => ['label' => Craft::t('stripe-checkout', 'Amount')],
             'email'       => ['label' => Craft::t('stripe-checkout', 'Email')],
             'dateCreated' => ['label' => Craft::t('stripe-checkout', 'Date Created')],
@@ -145,6 +144,7 @@ class Charge extends Element
             'paid'        => ['label' => Craft::t('stripe-checkout', 'Paid'), 'icon' => 'tag'],
             'refunded'    => ['label' => Craft::t('stripe-checkout', 'Refunded'), 'icon' => 'refresh'],
             'live'        => ['label' => Craft::t('stripe-checkout', 'Mode'), 'icon' => 'tool'],
+            'stripe'      => ['label' => Craft::t('stripe-checkout', 'Stripe'), 'icon' => 'share'],
         ];
 
         return $attributes;
@@ -152,19 +152,39 @@ class Charge extends Element
 
     protected static function defineDefaultTableAttributes(string $source): array
     {
-        $attributes = ['id', 'amount', 'email', 'dateCreated', 'dateUpdated', 'paid', 'refunded', 'live'];
+        $attributes = ['amount', 'email', 'dateCreated', 'dateUpdated', 'paid', 'refunded', 'live', 'stripe'];
 
         return $attributes;
+    }
+
+    // Public Methods
+    // =========================================================================
+
+    public function __toString()
+    {
+        return $this->getFormattedAmount();
     }
 
     public function getTableAttributeHtml(string $attribute): string
     {
         switch ($attribute) {
             case 'amount':
-              return $this->amount;
+                return $this->getFormattedAmount();
 
             case 'email':
-              return $this->email;
+                return $this->email;
+
+            case 'paid':
+                return $this->getPaidLabelHtml();
+
+            case 'refunded':
+                return $this->getRefundedLabelHtml();
+
+            case 'live':
+                return $this->getLiveLabelHtml();
+
+            case 'stripe':
+                return $this->getStripeLabelHtml();
 
             default:
                 {
@@ -173,17 +193,81 @@ class Charge extends Element
         }
     }
 
-    // Public Methods
-    // =========================================================================
-
-    public function getIsEditable(): bool
-    {
-        return false;
-    }
-
     public function getCpEditUrl()
     {
         return UrlHelper::cpUrl('stripe-checkout/charges/'.$this->id);
+    }
+
+    public function getStripeUrl()
+    {
+        return 'https://dashboard.stripe.com/payments/'.$this->stripeId;
+    }
+
+    public function getStatus()
+    {
+        return $this->chargeStatus;
+    }
+
+    public function getFormattedAmount()
+    {
+        $amount = ($this->amount / 100);
+        $amount = number_format($amount, 2);
+        $currency = strtoupper($this->currency);
+
+        return $amount . ' ' . $currency;
+    }
+
+    public function getPaidLabelHtml()
+    {
+      if ($this->paid) {
+          $colour = 'green';
+          $title  = 'Paid';
+      } else {
+          $colour = 'orange';
+          $title  = 'Pending payment';
+      }
+
+      $html = '<span class="status '.$colour.'" title="'.$title.'"></span>';
+
+      return $html;
+    }
+
+    public function getRefundedLabelHtml()
+    {
+      if ($this->refunded) {
+          $colour = 'green';
+          $title  = 'Refunded';
+      } else if ($this->amountRefunded > 0) {
+          $colour = 'orange';
+          $title  = 'Partially refunded';
+      } else {
+          $colour = 'light';
+          $title  = 'Not refunded';
+      }
+
+      $html = '<span class="status '.$colour.'" title="'.$title.'"></span>';
+
+      return $html;
+    }
+
+    public function getLiveLabelHtml()
+    {
+      if ($this->live) {
+          $colour = 'green';
+          $title  = 'Live';
+      } else {
+          $colour = 'orange';
+          $title  = 'Test';
+      }
+
+      $html = '<span class="status '.$colour.'" title="'.$title.'"></span>';
+
+      return $html;
+    }
+
+    public function getStripeLabelHtml()
+    {
+        return '<a href="'.$this->getStripeUrl().'" target="_blank" data-icon="share" title="View on Stripe"></a>';
     }
 
     // Indexes, etc.
