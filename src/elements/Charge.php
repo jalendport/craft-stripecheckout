@@ -93,7 +93,7 @@ class Charge extends Element
             ],
         ];
 
-        $sources[] = ['heading' => 'Charge Status'];
+        $sources[] = ['heading' => 'Account Mode'];
 
         $sources[] = [
             'key'         => 'live',
@@ -110,7 +110,63 @@ class Charge extends Element
             'status'      => 'orange',
             'label'       => 'Test',
             'criteria'    => [
-                'live' => false,
+                'live' => 'not 1',
+            ],
+            'defaultSort' => ['dateCreated', 'desc'],
+        ];
+
+        $sources[] = ['heading' => 'Payment'];
+
+        $sources[] = [
+            'key'         => 'paid',
+            'status'      => 'green',
+            'label'       => 'Paid',
+            'criteria'    => [
+                'paid' => true,
+            ],
+            'defaultSort' => ['dateCreated', 'desc'],
+        ];
+
+        $sources[] = [
+            'key'         => 'paymentPending',
+            'status'      => 'orange',
+            'label'       => 'Pending',
+            'criteria'    => [
+                'paid' => 'not 1',
+            ],
+            'defaultSort' => ['dateCreated', 'desc'],
+        ];
+
+        $sources[] = ['heading' => 'Refund'];
+
+        $sources[] = [
+            'key'         => 'fullRefund',
+            'status'      => 'green',
+            'label'       => 'Full',
+            'criteria'    => [
+                'refunded' => true,
+            ],
+            'defaultSort' => ['dateCreated', 'desc'],
+        ];
+
+        $sources[] = [
+            'key'         => 'partialRefund',
+            'status'      => 'orange',
+            'label'       => 'Partial',
+            'criteria'    => [
+                'refunded' => 'not 1',
+                'amountRefunded' => '> 0',
+            ],
+            'defaultSort' => ['dateCreated', 'desc'],
+        ];
+
+        $sources[] = [
+            'key'         => 'noRefund',
+            'status'      => 'light',
+            'label'       => 'None',
+            'criteria'    => [
+                'refunded' => 'not 1',
+                'amountRefunded' => '< 1',
             ],
             'defaultSort' => ['dateCreated', 'desc'],
         ];
