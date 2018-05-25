@@ -13,6 +13,7 @@ namespace lukeyouell\stripecheckout\controllers;
 use lukeyouell\stripecheckout\StripeCheckout;
 
 use Craft;
+use craft\helpers\UrlHelper;
 use craft\web\Controller;
 
 use yii\web\NotFoundHttpException;
@@ -35,8 +36,16 @@ class ChargesController extends Controller
             throw new NotFoundHttpException('Charge not found (#'.$id.')');
         }
 
+        $crumbs = [
+            [
+                'label' => StripeCheckout::getInstance()->settingsService->getName(),
+                'url'   => UrlHelper::cpUrl('stripe-checkout'),
+            ],
+        ];
+
         $variables = [
             'title'  => $charge->formattedAmount,
+            'crumbs' => $crumbs,
             'charge' => $charge,
         ];
 

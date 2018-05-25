@@ -36,6 +36,15 @@ class SettingsService extends Component
         }
     }
 
+    public function getName()
+    {
+        $settings = $this->settings;
+
+        $name = $settings->pluginNameOverride ?: StripeCheckout::$plugin->name;
+
+        return $name;
+    }
+
     public function getPublishableKey()
     {
         $settings = $this->settings;
