@@ -30,7 +30,7 @@ class ChargeService extends Component
     {
         $response = $this->createStripeCharge($request);
 
-        if (!isset($response['charge'])) {
+        if ((!isset($response['charge']) or (is_string($response['charge'])))) {
             return $response;
         }
 
