@@ -13,6 +13,7 @@ namespace lukeyouell\stripecheckout\services;
 use lukeyouell\stripecheckout\StripeCheckout;
 use lukeyouell\stripecheckout\elements\Charge;
 use lukeyouell\stripecheckout\elements\db\ChargeQuery;
+use lukeyouell\stripecheckout\events\ChargeEvent;
 
 use Craft;
 use craft\base\Component;
@@ -23,11 +24,25 @@ use yii\web\NotFoundHttpException;
 
 class ChargeService extends Component
 {
+    // Constants
+    // =========================================================================
+
+    const EVENT_BEFORE_CHARGE = 'beforeCharge';
+
+    const EVENT_AFTER_CHARGE = 'afterCharge';
+
     // Public Methods
     // =========================================================================
 
     public function createCharge($request)
     {
+        // Trigger beforeCharge event
+        $event = new ChargeEvent([
+            'request' => $request,
+        ]);
+        $self = new static;
+        $self->trigger(self::EVENT_BEFORE_CHARGE, $event);
+
         $response = $this->createStripeCharge($request);
 
         if ((!isset($response['charge'])) or (isset($response['message']))) {
@@ -39,6 +54,14 @@ class ChargeService extends Component
         if (!$charge) {
             throw new Exception('Couldn’t create the charge element.');
         }
+
+        // Trigger afterCharge event
+        $event = new ChargeEvent([
+            'request' => $request,
+            'charge'  => $charge,
+        ]);
+        $self = new static;
+        $self->trigger(self::EVENT_AFTER_CHARGE, $event);
 
         return $charge;
     }
