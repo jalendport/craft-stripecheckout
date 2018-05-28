@@ -17,3 +17,4 @@ All notable changes to this project will be documented in this file.
 - Improved error handling
 - Improved settings templates
 - Event names changed to `EVENT_BEFORE_CHARGE` and `EVENT_AFTER_CHARGE`
+- Updated icons
