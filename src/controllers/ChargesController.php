@@ -25,7 +25,11 @@ class ChargesController extends Controller
 
     public function actionIndex()
     {
-        return $this->renderTemplate('stripe-checkout/_charges/index');
+        $variables = [
+            'title' => 'Charges',
+        ];
+
+        return $this->renderTemplate('stripe-checkout/_charges/index', $variables);
     }
 
     public function actionView($id = null)
