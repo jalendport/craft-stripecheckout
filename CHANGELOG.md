@@ -16,3 +16,4 @@ All notable changes to this project will be documented in this file.
 - Charges are now elements
 - Improved error handling
 - Improved settings templates
+- Event names changed to `EVENT_BEFORE_CHARGE` and `EVENT_AFTER_CHARGE`
