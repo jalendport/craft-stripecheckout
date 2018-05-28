@@ -35,19 +35,11 @@ class ChargeQuery extends ElementQuery
 
     public $description;
 
-    public $source;
-
-    public $refunds;
-
-    public $shipping;
-
-    public $metadata;
-
-    public $outcome;
-
     public $failureCode;
 
     public $failureMessage;
+
+    public $data;
 
     public function stripeId($value)
     {
@@ -119,41 +111,6 @@ class ChargeQuery extends ElementQuery
         return $this;
     }
 
-    public function source($value)
-    {
-        $this->source = $value;
-
-        return $this;
-    }
-
-    public function refunds($value)
-    {
-        $this->refunds = $value;
-
-        return $this;
-    }
-
-    public function shipping($value)
-    {
-        $this->shipping = $value;
-
-        return $this;
-    }
-
-    public function metadata($value)
-    {
-        $this->metadata = $value;
-
-        return $this;
-    }
-
-    public function outcome($value)
-    {
-        $this->outcome = $value;
-
-        return $this;
-    }
-
     public function failureCode($value)
     {
         $this->failureCode = $value;
@@ -164,6 +121,13 @@ class ChargeQuery extends ElementQuery
     public function failureMessage($value)
     {
         $this->failureMessage = $value;
+
+        return $this;
+    }
+
+    public function data($value)
+    {
+        $this->data = $value;
 
         return $this;
     }
@@ -185,13 +149,9 @@ class ChargeQuery extends ElementQuery
             'stripecheckout_charges.amountRefunded',
             'stripecheckout_charges.currency',
             'stripecheckout_charges.description',
-            'stripecheckout_charges.source',
-            'stripecheckout_charges.refunds',
-            'stripecheckout_charges.shipping',
-            'stripecheckout_charges.metadata',
-            'stripecheckout_charges.outcome',
             'stripecheckout_charges.failureMessage',
             'stripecheckout_charges.failureCode',
+            'stripecheckout_charges.data',
         ]);
 
         if ($this->stripeId) {

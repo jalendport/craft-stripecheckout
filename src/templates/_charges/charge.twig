@@ -10,13 +10,13 @@
 
 {% block content %}
 
-  {% if charge.outcome %}
+  {% if charge.data.outcome %}
     <div class="mb-4 border-grey-light border-solid border rounded overflow-hidden">
       <div class="bg-grey-lightest p-4 text-grey-dark text-base border-grey-light border-solid border-b">
         Outcome
       </div>
 
-      {% for key, val in charge.outcome %}
+      {% for key, val in charge.data.outcome %}
         <div class="flex p-4 pb-2 {{ loop.last == false ? 'border-grey-light border-solid border-b' }}">
           <div class="w-full sm:w-1/3 mb-0 text-grey-dark">
             {{ (key|replace({'_': ' '}))|title }}
@@ -80,13 +80,13 @@
     </div>
   </div>
 
-  {% if charge.metadata %}
+  {% if charge.data.metadata %}
     <div class="mb-4 border-grey-light border-solid border rounded overflow-hidden">
       <div class="bg-grey-lightest p-4 text-grey-dark text-base border-grey-light border-solid border-b">
         Metadata
       </div>
 
-      {% for key, val in charge.metadata %}
+      {% for key, val in charge.data.metadata %}
         <div class="flex p-4 pb-2 {{ loop.last == false ? 'border-grey-light border-solid border-b' }}">
           <div class="w-full sm:w-1/3 mb-0 text-grey-dark">
             {{ (key|replace({'_': ' '}))|title }}
@@ -99,7 +99,7 @@
     </div>
   {% endif %}
 
-  {% if charge.source %}
+  {% if charge.data.source %}
     <div class="mb-4 border-grey-light border-solid border rounded overflow-hidden">
       <div class="bg-grey-lightest p-4 text-grey-dark text-base border-grey-light border-solid border-b">
         Card
@@ -110,7 +110,7 @@
           ID
         </div>
         <div class="mb-0">
-          {{ charge.source.id|default('N/A') }}
+          {{ charge.data.source.id|default('N/A') }}
         </div>
       </div>
 
@@ -119,7 +119,7 @@
           Name
         </div>
         <div class="mb-0">
-          {{ charge.source.name|default('N/A') }}
+          {{ charge.data.source.name|default('N/A') }}
         </div>
       </div>
 
@@ -128,7 +128,7 @@
           Type
         </div>
         <div class="mb-0">
-          {{ charge.source.brand|default('N/A') }}
+          {{ charge.data.source.brand|default('N/A') }}
         </div>
       </div>
 
@@ -137,7 +137,7 @@
           Number
         </div>
         <div class="mb-0">
-          •••• •••• •••• {{ charge.source.last4|default('N/A') }}
+          •••• •••• •••• {{ charge.data.source.last4|default('N/A') }}
         </div>
       </div>
 
@@ -146,7 +146,7 @@
           Expires
         </div>
         <div class="mb-0">
-          {{ charge.source.exp_month|default('N/A') }}/{{ charge.source.exp_year|default('N/A') }}
+          {{ charge.data.source.exp_month|default('N/A') }}/{{ charge.data.source.exp_year|default('N/A') }}
         </div>
       </div>
 
@@ -155,7 +155,7 @@
           CVC Check
         </div>
         <div class="mb-0">
-          {{ (charge.source.cvc_check|title)|default('N/A') }}
+          {{ (charge.data.source.cvc_check|title)|default('N/A') }}
         </div>
       </div>
 
@@ -164,11 +164,11 @@
           Address
         </div>
         <div class="mb-0">
-          {{ charge.source.address_line1 ? (charge.source.address_line1 ~ '<br>')|raw }}
-          {{ charge.source.address_line2 ? (charge.source.address_line2 ~ '<br>')|raw }}
-          {{ charge.source.address_city ? (charge.source.address_city ~ '<br>')|raw }}
-          {{ charge.source.address_zip ? (charge.source.address_zip ~ '<br>')|raw }}
-          {{ charge.source.address_country ? charge.source.address_country }}
+          {{ charge.data.source.address_line1 ? (charge.data.source.address_line1 ~ '<br>')|raw }}
+          {{ charge.data.source.address_line2 ? (charge.data.source.address_line2 ~ '<br>')|raw }}
+          {{ charge.data.source.address_city ? (charge.data.source.address_city ~ '<br>')|raw }}
+          {{ charge.data.source.address_zip ? (charge.data.source.address_zip ~ '<br>')|raw }}
+          {{ charge.data.source.address_country ? charge.data.source.address_country }}
         </div>
       </div>
 
@@ -177,7 +177,7 @@
           Street Check
         </div>
         <div class="mb-0">
-          {{ (charge.source.address_line1_check|title)|default('N/A') }}
+          {{ (charge.data.source.address_line1_check|title)|default('N/A') }}
         </div>
       </div>
 
@@ -186,7 +186,7 @@
           Zip Check
         </div>
         <div class="mb-0">
-          {{ (charge.source.address_zip_check|title)|default('N/A') }}
+          {{ (charge.data.source.address_zip_check|title)|default('N/A') }}
         </div>
       </div>
     </div>

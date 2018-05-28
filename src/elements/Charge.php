@@ -46,19 +46,11 @@ class Charge extends Element
 
     public $description;
 
-    public $source;
-
-    public $refunds;
-
-    public $shipping;
-
-    public $metadata;
-
-    public $outcome;
-
     public $failureCode;
 
     public $failureMessage;
+
+    public $data;
 
     // Static Methods
     // =========================================================================
@@ -235,11 +227,7 @@ class Charge extends Element
     {
         parent::init();
 
-        $this->source = Json::decode($this->source);
-        $this->refunds = Json::decode($this->refunds);
-        $this->shipping = Json::decode($this->shipping);
-        $this->metadata = Json::decode($this->metadata);
-        $this->outcome = Json::decode($this->outcome);
+        $this->data = Json::decode($this->data);
     }
 
     public function __toString()
@@ -395,13 +383,9 @@ class Charge extends Element
                     'amountRefunded' => $this->amountRefunded,
                     'currency'       => $this->currency,
                     'description'    => $this->description,
-                    'source'         => $this->source,
-                    'refunds'        => $this->refunds,
-                    'shipping'       => $this->shipping,
-                    'metadata'       => $this->metadata,
-                    'outcome'        => $this->outcome,
                     'failureCode'    => $this->failureCode,
                     'failureMessage' => $this->failureMessage,
+                    'data'           => $this->data,
                 ])
                 ->execute();
         } else {
@@ -417,13 +401,9 @@ class Charge extends Element
                     'amountRefunded' => $this->amountRefunded,
                     'currency'       => $this->currency,
                     'description'    => $this->description,
-                    'source'         => $this->source,
-                    'refunds'        => $this->refunds,
-                    'shipping'       => $this->shipping,
-                    'metadata'       => $this->metadata,
-                    'outcome'        => $this->outcome,
                     'failureCode'    => $this->failureCode,
                     'failureMessage' => $this->failureMessage,
+                    'data'           => $this->data,
                 ], ['id' => $this->id])
                 ->execute();
         }

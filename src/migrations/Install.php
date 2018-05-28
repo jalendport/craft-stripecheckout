@@ -78,13 +78,9 @@ class Install extends Migration
                     'amountRefunded' => $this->integer(),
                     'currency'       => $this->string(),
                     'description'    => $this->string(),
-                    'source'         => $this->text(),
-                    'refunds'        => $this->text(),
-                    'shipping'       => $this->text(),
-                    'metadata'       => $this->text(),
-                    'outcome'        => $this->text(),
                     'failureCode'    => $this->string(),
                     'failureMessage' => $this->string(),
+                    'data'           => $this->text(),
                 ]
             );
         }

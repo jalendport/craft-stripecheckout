@@ -114,13 +114,9 @@ class ChargeService extends Component
             $charge->amountRefunded = $stripeCharge->amount_refunded ?? null;
             $charge->currency       = $stripeCharge->currency ?? null;
             $charge->description    = $stripeCharge->description ?? null;
-            $charge->source         = $stripeCharge->source ? Json::encode($stripeCharge->source) : null;
-            $charge->refunds        = $stripeCharge->refunds ? Json::encode($stripeCharge->refunds->data) : null;
-            $charge->shipping       = $stripeCharge->shipping ? Json::encode($stripeCharge->shipping) : null;
-            $charge->metadata       = $stripeCharge->metadata ? Json::encode($stripeCharge->metadata) : null;
-            $charge->outcome        = $stripeCharge->outcome ? Json::encode($stripeCharge->outcome) : null;
             $charge->failureCode    = $stripeCharge->failure_code ?? null;
             $charge->failureMessage = $stripeCharge->failure_message ?? null;
+            $charge->data           = $stripeCharge ? Json::encode($stripeCharge) : null;
 
             $res = Craft::$app->getElements()->saveElement($charge, true, false);
 
@@ -150,13 +146,9 @@ class ChargeService extends Component
             $charge->amountRefunded = $stripeCharge->amount_refunded ?? null;
             $charge->currency       = $stripeCharge->currency ?? null;
             $charge->description    = $stripeCharge->description ?? null;
-            $charge->source         = $stripeCharge->source ? Json::encode($stripeCharge->source) : null;
-            $charge->refunds        = $stripeCharge->refunds ? Json::encode($stripeCharge->refunds->data) : null;
-            $charge->shipping       = $stripeCharge->shipping ? Json::encode($stripeCharge->shipping) : null;
-            $charge->metadata       = $stripeCharge->metadata ? Json::encode($stripeCharge->metadata) : null;
-            $charge->outcome        = $stripeCharge->outcome ? Json::encode($stripeCharge->outcome) : null;
             $charge->failureCode    = $stripeCharge->failure_code ?? null;
             $charge->failureMessage = $stripeCharge->failure_message ?? null;
+            $charge->data           = $stripeCharge ? Json::encode($stripeCharge) : null;
 
             $res = Craft::$app->getElements()->saveElement($charge, true, false);
 
