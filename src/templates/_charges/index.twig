@@ -2,3 +2,9 @@
 {% set elementType = 'lukeyouell\\stripecheckout\\elements\\Charge' %}
 
 {% set title = 'Charges' %}
+
+{% block actionButton %}
+  <div class="buttons">
+    <span class="btn" onClick="window.location.reload()" data-icon="refresh"></span>
+  </div>
+{% endblock %}

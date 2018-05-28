@@ -2,6 +2,12 @@
 
 {% do view.registerCssFile('https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css') %}
 
+{% block actionButton %}
+  <div class="buttons">
+    <span class="btn" onClick="window.location.reload()" data-icon="refresh"></span>
+  </div>
+{% endblock %}
+
 {% block content %}
 
   {% if charge.outcome %}
