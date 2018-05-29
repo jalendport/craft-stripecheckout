@@ -365,8 +365,8 @@ class Charge extends Element
     protected static function defineSortOptions(): array
     {
         $sortOptions = [
-            'stripecheckout_charges.dateCreated' => 'Date Created',
-            'stripecheckout_charges.dateUpdated' => 'Date Updated',
+            'checkout_charges.dateCreated' => 'Date Created',
+            'checkout_charges.dateUpdated' => 'Date Updated',
         ];
 
         return $sortOptions;
@@ -378,7 +378,7 @@ class Charge extends Element
     {
         if ($isNew) {
             Craft::$app->db->createCommand()
-                ->insert('{{%stripecheckout_charges}}', [
+                ->insert('{{%checkout_charges}}', [
                     'id'             => $this->id,
                     'stripeId'       => $this->stripeId,
                     'email'          => $this->email,
@@ -397,7 +397,7 @@ class Charge extends Element
                 ->execute();
         } else {
             Craft::$app->db->createCommand()
-                ->update('{{%stripecheckout_charges}}', [
+                ->update('{{%checkout_charges}}', [
                     'stripeId'       => $this->stripeId,
                     'email'          => $this->email,
                     'live'           => $this->live,

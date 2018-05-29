@@ -135,67 +135,67 @@ class ChargeQuery extends ElementQuery
     protected function beforePrepare(): bool
     {
         // join in the products table
-        $this->joinElementTable('stripecheckout_charges');
+        $this->joinElementTable('checkout_charges');
 
         // select the columns
         $this->query->select([
-            'stripecheckout_charges.stripeId',
-            'stripecheckout_charges.email',
-            'stripecheckout_charges.live',
-            'stripecheckout_charges.chargeStatus',
-            'stripecheckout_charges.paid',
-            'stripecheckout_charges.refunded',
-            'stripecheckout_charges.amount',
-            'stripecheckout_charges.amountRefunded',
-            'stripecheckout_charges.currency',
-            'stripecheckout_charges.description',
-            'stripecheckout_charges.failureMessage',
-            'stripecheckout_charges.failureCode',
-            'stripecheckout_charges.data',
+            'checkout_charges.stripeId',
+            'checkout_charges.email',
+            'checkout_charges.live',
+            'checkout_charges.chargeStatus',
+            'checkout_charges.paid',
+            'checkout_charges.refunded',
+            'checkout_charges.amount',
+            'checkout_charges.amountRefunded',
+            'checkout_charges.currency',
+            'checkout_charges.description',
+            'checkout_charges.failureMessage',
+            'checkout_charges.failureCode',
+            'checkout_charges.data',
         ]);
 
         if ($this->stripeId) {
-            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.stripeId', $this->stripeId));
+            $this->subQuery->andWhere(Db::parseParam('checkout_charges.stripeId', $this->stripeId));
         }
 
         if ($this->email) {
-            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.email', $this->email));
+            $this->subQuery->andWhere(Db::parseParam('checkout_charges.email', $this->email));
         }
 
         if ($this->live) {
-            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.live', $this->live));
+            $this->subQuery->andWhere(Db::parseParam('checkout_charges.live', $this->live));
         }
 
         if ($this->chargeStatus) {
-            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.chargeStatus', $this->chargeStatus));
+            $this->subQuery->andWhere(Db::parseParam('checkout_charges.chargeStatus', $this->chargeStatus));
         }
 
         if ($this->paid) {
-            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.paid', $this->paid));
+            $this->subQuery->andWhere(Db::parseParam('checkout_charges.paid', $this->paid));
         }
 
         if ($this->refunded) {
-            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.refunded', $this->refunded));
+            $this->subQuery->andWhere(Db::parseParam('checkout_charges.refunded', $this->refunded));
         }
 
         if ($this->amount) {
-            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.amount', $this->amount));
+            $this->subQuery->andWhere(Db::parseParam('checkout_charges.amount', $this->amount));
         }
 
         if ($this->amountRefunded) {
-            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.amountRefunded', $this->amountRefunded));
+            $this->subQuery->andWhere(Db::parseParam('checkout_charges.amountRefunded', $this->amountRefunded));
         }
 
         if ($this->currency) {
-            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.currency', $this->currency));
+            $this->subQuery->andWhere(Db::parseParam('checkout_charges.currency', $this->currency));
         }
 
         if ($this->description) {
-            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.description', $this->description));
+            $this->subQuery->andWhere(Db::parseParam('checkout_charges.description', $this->description));
         }
 
         if ($this->failureCode) {
-            $this->subQuery->andWhere(Db::parseParam('stripecheckout_charges.failureCode', $this->failureCode));
+            $this->subQuery->andWhere(Db::parseParam('checkout_charges.failureCode', $this->failureCode));
         }
 
         return parent::beforePrepare();

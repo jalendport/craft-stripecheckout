@@ -61,7 +61,7 @@ class Install extends Migration
             $tablesCreated = true;
 
             $this->createTable(
-                '{{%stripecheckout_charges}}',
+                '{{%checkout_charges}}',
                 [
                     'id'             => $this->primaryKey(),
                     'dateCreated'    => $this->dateTime()->notNull(),
@@ -90,16 +90,16 @@ class Install extends Migration
 
     protected function addForeignKeys()
     {
-        $this->addForeignKey(null, '{{%stripecheckout_charges}}', ['id'], '{{%elements}}', ['id'], 'CASCADE');
+        $this->addForeignKey(null, '{{%checkout_charges}}', ['id'], '{{%elements}}', ['id'], 'CASCADE');
     }
 
     protected function dropForeignKeys()
     {
-        MigrationHelper::dropAllForeignKeysOnTable('{{%stripecheckout_charges}}', $this);
+        MigrationHelper::dropAllForeignKeysOnTable('{{%checkout_charges}}', $this);
     }
 
     protected function dropTables()
     {
-        $this->dropTable('{{%stripecheckout_charges}}');
+        $this->dropTable('{{%checkout_charges}}');
     }
 }
