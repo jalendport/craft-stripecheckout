@@ -23,6 +23,13 @@ use craft\helpers\UrlHelper;
 
 class Charge extends Element
 {
+    // Constants
+    // =========================================================================
+
+    const CHARGE_SUCCEEDED = 'green';
+    const CHARGE_PENDING = 'orange';
+    const CHARGE_FAILED = 'red';
+
     // Public Properties
     // =========================================================================
 
@@ -277,16 +284,16 @@ class Charge extends Element
     {
         switch ($this->chargeStatus) {
             case 'succeeded':
-                return 'green';
+                return self::CHARGE_SUCCEEDED;
 
             case 'pending':
-                return 'orange';
+                return self::CHARGE_PENDING;
 
             case 'failed':
-                return 'red';
+                return self::CHARGE_FAILED;
 
             default:
-                return 'orange';
+                return self::CHARGE_PENDING;
         }
     }
 
