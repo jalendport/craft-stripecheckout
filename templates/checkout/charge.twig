@@ -1,0 +1,18 @@
+{% extends "checkout/_layouts/main" %}
+
+{% set id = craft.app.request.getQueryParam('id') %}
+{% set charge = craft.stripecheckout.charges.id(id).one() %}
+
+{% block content %}
+
+  {% if charge %}
+    <div class="bg-green-lightest p-8 text-green-dark overflow-x-scroll">
+      <pre>{{ charge|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+    </div>
+  {% else %}
+    <div class="bg-red-lightest p-8 text-red-dark">
+      <pre>Charge not found.</pre>
+    </div>
+  {% endif %}
+
+{% endblock %}

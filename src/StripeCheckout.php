@@ -89,7 +89,7 @@ class StripeCheckout extends Plugin
             CraftVariable::EVENT_INIT,
             function (Event $event) {
                 $variable = $event->sender;
-                $variable->set($this->handle, StripeCheckoutVariable::class);
+                $variable->set('stripecheckout', StripeCheckoutVariable::class);
             }
         );
 

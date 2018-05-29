@@ -11,6 +11,8 @@
 namespace lukeyouell\stripecheckout\variables;
 
 use lukeyouell\stripecheckout\StripeCheckout;
+use lukeyouell\stripecheckout\elements\Charge;
+use lukeyouell\stripecheckout\elements\db\ChargeQuery;
 
 use Craft;
 
@@ -22,5 +24,13 @@ class StripeCheckoutVariable
     public function checkoutOptions($options = [])
     {
         return StripeCheckout::getInstance()->checkoutService->getCheckoutHtml($options);
+    }
+
+    public function charges(array $criteria = []): ChargeQuery
+    {
+        $query = Charge::find();
+        Craft::configure($query, $criteria);
+
+        return $query;
     }
 }
