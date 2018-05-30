@@ -50,6 +50,7 @@ It's possible to pass additional data as charge metadata, simply provide the inp
     amount: 500,
     metadata: ['orderComments']
 }) }}
+```
 
 ### Redirecting
 
