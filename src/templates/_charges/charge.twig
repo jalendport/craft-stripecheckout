@@ -21,3 +21,27 @@
   {% include "stripe-checkout/_charges/partials/refunds" %}
 
 {% endblock %}
+
+{% block details %}
+
+  <div class="meta read-only">
+    <div class="data">
+      <div class="heading">
+        Created
+      </div>
+      <div class="value">
+        {{ charge.dateCreated|datetime('short') }}
+      </div>
+    </div>
+
+    <div class="data">
+      <div class="heading">
+        Updated
+      </div>
+      <div class="value">
+        {{ charge.dateCreated|datetime('short') }}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
