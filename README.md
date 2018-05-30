@@ -4,6 +4,8 @@
 
 Bringing the power of Stripe Checkout to your Craft templates.
 
+<img src="resources/screenshots/charges.png" alt="screenshot">
+
 ## Documentation
 
 ### Installation
