@@ -1,6 +1,6 @@
 {% extends "_layouts/cp" %}
 
-{% do view.registerCssFile('https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css') %}
+{% do view.registerAssetBundle("lukeyouell\\stripecheckout\\assetbundles\\ChargeBundle") %}
 
 {% block actionButton %}
   <div class="buttons">
