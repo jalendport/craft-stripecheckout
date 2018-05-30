@@ -56,9 +56,9 @@ class ChargesController extends Controller
                 'url'   => '#refunds',
                 'label' => 'Refunds ('.count($charge->data['refunds']['data']).')',
             ],
-            'raw' => [
-                'url'   => '#raw',
-                'label' => 'Raw Charge',
+            'data' => [
+                'url'   => '#data',
+                'label' => 'Data',
             ],
         ];
 

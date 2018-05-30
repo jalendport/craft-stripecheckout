@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Default templates
 - The ability to filter, search, sort and delete charges
 - The ability to override the plugin name
+- View raw charge data
 
 ### Changed
 
