@@ -65,3 +65,43 @@ Any errors will be made available too:
 ```twig
 {% set errors = craft.app.session.getFlash('errors') %}
 ```
+
+### Full Example
+
+```twig
+{% set options = {
+    amount: 10000,
+    locale: 'auto',
+    name: 'Demo',
+    description: 'This is a demo',
+    image: 'https://www.yourwebsite.com/images/checkout.png',
+    currency: 'gbp',
+    email: 'joe.bloggs@yourwebsite.com',
+    label: 'Pay with Card',
+    panelLabel: 'Pay',
+    zipCode: true,
+    billingAddress: true,
+    shippingAddress: true,
+    allowRememberMe: true,
+    metadata: ['sizes', 'orderComments']
+} %}
+
+<form action="" method="post">
+  {{ csrfInput() }}
+  {{ redirectInput('checkout/confirmation') }}
+  <input type="hidden" name="action" value="stripe-checkout/charge">
+
+  <label>Sizes</label>
+  <select name="sizes[]" multiple>
+    <option value="small">Small</option>
+    <option value="medium">Medium</option>
+    <option value="large">Large</option>
+  </select>
+
+  <label>Order comments</label>
+  <textarea name="orderComments"></textarea>
+
+  {{ checkout(options) }}
+
+</form>
+```
