@@ -1,38 +1,31 @@
-# Stripe Checkout plugin for Craft CMS 3.x
+<img src="src/icon.svg" alt="icon" width="100" height="100">
+
+# Stripe Checkout plugin for Craft CMS 3
 
 Bringing the power of Stripe Checkout to your Craft templates.
 
-![Screenshot](resources/img/plugin-logo.png)
+## Documentation
 
-## Requirements
+### Installation
 
-This plugin requires Craft CMS 3.0.0-beta.23 or later.
+- [Installation](docs/installation.md)
 
-## Installation
+### Configuration
 
-To install the plugin, follow these instructions.
+- [General Config](docs/general-config.md)
 
-1. Open your terminal and go to your Craft project:
+### Core Concepts
 
-        cd /path/to/project
+- [Charges](docs/charges.md)
 
-2. Then tell Composer to load the plugin:
+### Getting Elements
 
-        composer require craft-stripechekout/stripe-checkout
+- [craft.stripecheckout.charges](docs/craft-stripecheckout-charges.md)
 
-3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Stripe Checkout.
+### Template Guides
 
-## Stripe Checkout Overview
-
--Insert text here-
-
-## Configuring Stripe Checkout
-
--Insert text here-
-
-## Using Stripe Checkout
-
--Insert text here-
+- [Available Variables](docs/available-variables.md)
+- [Creating Charges](docs/creating-charges.md)
 
 ## Stripe Checkout Roadmap
 
