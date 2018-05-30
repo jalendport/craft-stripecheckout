@@ -7,7 +7,7 @@
     <div class="w-full sm:w-1/3 text-grey-dark">
       ID
     </div>
-    <div class="mb-0">
+    <div>
       {{ charge.stripeId|default('N/A') }}
     </div>
   </div>
@@ -20,7 +20,7 @@
     <div class="w-full sm:w-1/3 text-grey-dark">
       Status
     </div>
-    <div class="mb-0">
+    <div>
       {{ (charge.chargeStatus|title)|default('N/A') }}
     </div>
   </div>
@@ -29,7 +29,7 @@
     <div class="w-full sm:w-1/3 text-grey-dark">
       Amount
     </div>
-    <div class="mb-0">
+    <div>
       {{ charge.formattedAmount|default('N/A') }}
     </div>
   </div>
@@ -38,7 +38,7 @@
     <div class="w-full sm:w-1/3 text-grey-dark">
       Email
     </div>
-    <div class="mb-0">
+    <div>
       {{ charge.email|default('N/A') }}
     </div>
   </div>
@@ -47,7 +47,7 @@
     <div class="w-full sm:w-1/3 text-grey-dark">
       Description
     </div>
-    <div class="mb-0">
+    <div>
       {{ charge.description|default('N/A') }}
     </div>
   </div>

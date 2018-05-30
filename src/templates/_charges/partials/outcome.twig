@@ -15,7 +15,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Type
       </div>
-      <div class="mb-0">
+      <div>
         {{ ((outcome.type|replace({'_': ' '}))|title)|default('N/A') }}
       </div>
     </div>
@@ -28,7 +28,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Risk Level
       </div>
-      <div class="mb-0">
+      <div>
         {{ ((outcome.risk_level|replace({'_': ' '}))|title)|default('N/A') }}
       </div>
     </div>
@@ -37,7 +37,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Message
       </div>
-      <div class="mb-0">
+      <div>
         {{ outcome.seller_message|default('N/A') }}
       </div>
     </div>
@@ -49,7 +49,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Network Status
       </div>
-      <div class="mb-0">
+      <div>
         {{ ((outcome.network_status|replace({'_': ' '}))|title)|default('N/A') }}
       </div>
     </div>
@@ -58,7 +58,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Reason
       </div>
-      <div class="mb-0">
+      <div>
         {{ ((outcome.reason|replace({'_': ' '}))|title)|default('N/A') }}
       </div>
     </div>

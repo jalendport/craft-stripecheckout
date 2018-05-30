@@ -11,7 +11,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         ID
       </div>
-      <div class="mb-0">
+      <div>
         {{ source.id|default('N/A') }}
       </div>
     </div>
@@ -20,7 +20,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Name
       </div>
-      <div class="mb-0">
+      <div>
         {{ source.name|default('N/A') }}
       </div>
     </div>
@@ -29,7 +29,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Type
       </div>
-      <div class="mb-0">
+      <div>
         {{ source.brand|default('N/A') }}
       </div>
     </div>
@@ -38,7 +38,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Country
       </div>
-      <div class="mb-0">
+      <div>
         {{ source.country|default('N/A') }}
       </div>
     </div>
@@ -47,7 +47,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Funding
       </div>
-      <div class="mb-0">
+      <div>
         {{ (source.funding|title)|default('N/A') }}
       </div>
     </div>
@@ -56,7 +56,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Number
       </div>
-      <div class="mb-0">
+      <div>
         •••• •••• •••• {{ source.last4|default('N/A') }}
       </div>
     </div>
@@ -65,7 +65,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Expires
       </div>
-      <div class="mb-0">
+      <div>
         {{ source.exp_month|default('N/A') }}/{{ source.exp_year|default('N/A') }}
       </div>
     </div>
@@ -78,7 +78,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         CVC Check
       </div>
-      <div class="mb-0">
+      <div>
         {{ (source.cvc_check|title)|default('N/A') }}
       </div>
     </div>
@@ -87,7 +87,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Address
       </div>
-      <div class="mb-0">
+      <div>
         {% if source.address_line1 %}
           {{ source.address_line1 ? (source.address_line1 ~ '<br>')|raw }}
           {{ source.address_line2 ? (source.address_line2 ~ '<br>')|raw }}
@@ -108,7 +108,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Street Check
       </div>
-      <div class="mb-0">
+      <div>
         {{ (source.address_line1_check|title)|default('N/A') }}
       </div>
     </div>
@@ -121,7 +121,7 @@
       <div class="w-full sm:w-1/3 text-grey-dark">
         Zip Check
       </div>
-      <div class="mb-0">
+      <div>
         {{ (source.address_zip_check|title)|default('N/A') }}
       </div>
     </div>
