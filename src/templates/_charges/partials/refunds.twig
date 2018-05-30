@@ -1,13 +1,11 @@
 {% set refunds = charge.data.refunds.data ?: null %}
 
 <div>
-  {% if refunds %}
-
-    <div class="mb-4 border-grey-light border-solid border rounded overflow-hidden">
-      <div class="bg-grey-lightest p-4 text-grey-dark text-sm border-grey-light border-solid border-b">
-        Refunds
-      </div>
-
+  <div class="mb-4 border-grey-light border-solid border rounded overflow-hidden">
+    <div class="bg-grey-lightest p-4 text-grey-dark text-sm border-grey-light border-solid border-b">
+      Refunds
+    </div>
+    {% if refunds %}
       {% for refund in refunds %}
         <div class="flex p-4 pb-2">
           <div class="w-full sm:w-1/3 text-grey-dark">
@@ -20,7 +18,13 @@
           </div>
         </div>
       {% endfor %}
+    {% else %}
+      <div class="flex p-4 pb-2 bg-red-lightest">
+        <div class="w-full">
+          No refunds exist for this charge.
+        </div>
+      </div>
+    {% endif %}
 
-    </div>
-  {% endif %}
+  </div>
 </div>
