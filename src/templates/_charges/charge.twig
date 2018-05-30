@@ -5,6 +5,7 @@
 {% block actionButton %}
   <div class="buttons">
     <span class="btn" onClick="window.location.reload()" data-icon="refresh" title="Refresh"></span>
+    <a class="btn submit" href="{{ charge.stripeUrl }}" target="_blank" data-icon="view">View on Stripe</a>
   </div>
 {% endblock %}
 
