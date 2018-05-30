@@ -62,6 +62,10 @@ Error code explaining reason for charge failure if available (see [the errors se
 
 Message to user further explaining reason for charge failure if available.
 
+### `formattedAmount`
+
+The amount followed by the currency.
+
 ### `email`
 
 This is the email address that the receipt for this charge was sent to.
@@ -85,3 +89,7 @@ Whether the charge has been fully refunded. If the charge is only partially refu
 ### `stripeId`
 
 The charge ID supplied by Stripe.
+
+### `stripeUrl`
+
+Returns the URL to the charge in the Stripe dashboard.
