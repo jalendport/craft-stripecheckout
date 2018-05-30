@@ -10,15 +10,25 @@
 
 {% block content %}
 
-  {% include "stripe-checkout/_charges/partials/outcome" %}
+<div>
+  <div id="overview">
+    {% include "stripe-checkout/_charges/partials/outcome" %}
 
-  {% include "stripe-checkout/_charges/partials/paymentDetails" %}
+    {% include "stripe-checkout/_charges/partials/paymentDetails" %}
 
-  {% include "stripe-checkout/_charges/partials/metadata" %}
+    {% include "stripe-checkout/_charges/partials/metadata" %}
 
-  {% include "stripe-checkout/_charges/partials/source" %}
+    {% include "stripe-checkout/_charges/partials/source" %}
+  </div>
 
-  {% include "stripe-checkout/_charges/partials/refunds" %}
+  <div id="refunds" class="hidden">
+    {% include "stripe-checkout/_charges/partials/refunds" %}
+  </div>
+
+  <div id="raw" class="hidden">
+    {% include "stripe-checkout/_charges/partials/raw" %}
+  </div>
+</div>
 
 {% endblock %}
 

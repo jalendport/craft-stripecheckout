@@ -47,9 +47,25 @@ class ChargesController extends Controller
             ],
         ];
 
+        $tabs = [
+            'overview' => [
+                'url'   => '#overview',
+                'label' => 'Overview',
+            ],
+            'refunds' => [
+                'url'   => '#refunds',
+                'label' => 'Refunds ('.count($charge->data['refunds']['data']).')',
+            ],
+            'raw' => [
+                'url'   => '#raw',
+                'label' => 'Raw Charge',
+            ],
+        ];
+
         $variables = [
             'title'  => $charge->formattedAmount,
             'crumbs' => $crumbs,
+            'tabs'   => $tabs,
             'charge' => $charge,
         ];
 
