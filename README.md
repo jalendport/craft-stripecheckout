@@ -26,6 +26,7 @@ Bringing the power of Stripe Checkout to your Craft templates.
 
 - [Available Variables](docs/available-variables.md)
 - [Creating Charges](docs/creating-charges.md)
+- [Default Templates](docs/default-templates.md)
 
 ## Stripe Checkout Roadmap
 
