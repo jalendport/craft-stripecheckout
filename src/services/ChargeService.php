@@ -106,7 +106,11 @@ class ChargeService extends Component
             $exists = $this->getChargeByStripeId($stripeCharge->id);
 
             if ($exists) {
-                $this->updateCharge($stripeCharge);
+                $res = $this->updateCharge($stripeCharge);
+
+                if ($res) {
+                    return true;
+                }
             } else {
                 $charge = new Charge();
 
