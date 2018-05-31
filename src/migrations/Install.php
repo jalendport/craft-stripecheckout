@@ -56,7 +56,7 @@ class Install extends Migration
         $tablesCreated = false;
 
         // support_tickets table
-        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%support_tickets}}');
+        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%checkout_charges}}');
         if ($tableSchema === null) {
             $tablesCreated = true;
 
