@@ -1,0 +1,24 @@
+{% extends "checkout/_layouts/main" %}
+
+{% set links = [
+  {
+    target: '/checkout/charges',
+    label:  'View Charges',
+  },
+  {
+    target: '/checkout/create',
+    label:  'Create a Charge',
+  },
+] %}
+
+{% block content %}
+
+  <div class="bg-white p-8 pb-4">
+    {% for link in links %}
+      <a class="block bg-green hover:bg-green-dark p-4 mb-4 text-base text-white no-underline text-center rounded" href="{{ link.target }}">
+        {{ link.label }}
+      </a>
+    {% endfor %}
+  </div>
+
+{% endblock %}

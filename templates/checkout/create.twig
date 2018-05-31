@@ -1,0 +1,52 @@
+{% extends "checkout/_layouts/main" %}
+
+{% set options = {
+    amount:          500,
+    label:           'Proceed Payment',
+    name:            'Stripe Checkout',
+    metadata:        ['orderComments'],
+} %}
+
+{% block content %}
+
+  <form action="" method="post">
+    {{ csrfInput() }}
+    {{ redirectInput('checkout/confirmation') }}
+    <input type="hidden" name="action" value="stripe-checkout/charge">
+
+    <div class="bg-white p-8">
+      <div class="border-grey border-dotted border-b">
+        <h1 class="text-2xl font-light mb-4">Checkout</h1>
+        <p class="text-sm text-grey-dark leading-normal mb-4">Praesent facilisis placerat libero, non varius mauris tempor sit amet. Ut lobortis sed nisi vitae blandit.</p>
+      </div>
+
+      <div class="flex text-sm text-grey-dark border-grey border-dotted border-b">
+        <div class="flex-grow py-4">
+          Coffee Mug
+        </div>
+        <div class="flex-shrink py-4">
+          &pound;{{ (options.amount / 100)|number_format(2, '.', ',') }}
+        </div>
+      </div>
+
+      <div class="flex items-center border-grey border-dotted border-b">
+        <div class="flex-grow py-4 text-sm text-grey-dark">
+          Final Price
+        </div>
+        <div class="flex-shrink py-4 text-lg text-green">
+          &pound;{{ (options.amount / 100)|number_format(2, '.', ',') }}
+        </div>
+      </div>
+
+      <div class="pt-4">
+        <label class="block text-sm text-grey-dark mb-2">Comments</label>
+        <textarea class="appearance-none resize-none w-full h-24 p-4 text-sm border-grey-light border-solid border rounded" name="orderComments"></textarea>
+      </div>
+    </div>
+
+    <div class="bg-indigo-lightest p-8">
+      {{ checkout(options) }}
+    </div>
+  </form>
+
+{% endblock %}

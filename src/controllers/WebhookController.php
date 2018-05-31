@@ -4,8 +4,8 @@
  *
  * Bringing the power of Stripe Checkout to your Craft templates.
  *
- * @link      https://github.com/lukeyouell
- * @copyright Copyright (c) 2017 Luke Youell
+ * @link      https://github.com/lukeyouell/craft-stripecheckout
+ * @copyright Copyright (c) 2018 Luke Youell
  */
 
 namespace lukeyouell\stripecheckout\controllers;
@@ -13,58 +13,54 @@ namespace lukeyouell\stripecheckout\controllers;
 use lukeyouell\stripecheckout\StripeCheckout;
 
 use Craft;
+use craft\helpers\Json;
 use craft\web\Controller;
-use lukeyouell\stripecheckout\services\WebhookService;
 
-/**
- * @author    Luke Youell
- * @package   StripeCheckout
- * @since     1.0.0
- */
+use Yii;
+use yii\base\InvalidConfigException;
+
 class WebhookController extends Controller
 {
-
     // Protected Properties
     // =========================================================================
 
-    protected $allowAnonymous = true;
+    protected $allowAnonymous = ['index'];
 
     // Public Methods
     // =========================================================================
 
     public function init()
     {
-      parent::init();
-      $this->enableCsrfValidation = false;
-      $settings = StripeCheckout::$plugin->getSettings();
-      $secretKey = $settings->accountMode === 'live' ? $settings->liveSecretKey : $settings->testSecretKey;
-      \Stripe\Stripe::setApiKey($secretKey);
+        parent::init();
+
+        $this->enableCsrfValidation = false;
+
+        $secretKey = StripeCheckout::getInstance()->settingsService->getSecretKey();
+        \Stripe\Stripe::setApiKey($secretKey);
     }
 
-    /**
-     * @return mixed
-     */
     public function actionIndex()
     {
         $this->requirePostRequest();
 
-        http_response_code(200);
+        $request = @file_get_contents('php://input');
+        $webhook = Json::decode($request, false);
 
-        $request = @file_get_contents("php://input");
-        $webhook = json_decode($request);
+        $event = StripeCheckout::getInstance()->webhookService->verifyEvent($webhook->id);
 
-        $event = WebhookService::verifyEvent($webhook->id);
-
-        if ($event) {
-
-          $handle = WebhookService::handleEvent($webhook);
-
-          return $this->asJson(['status' => 'handled']);
-
-        } else {
-
-          return $this->asJson(['status' => 'failed']);
-
+        if (!$event) {
+            Craft::$app->response->setStatusCode(400);
+            return $this->asJson(['success' => false, 'reason' => 'Event couldn’t be verified.']);
         }
+
+        $handled = StripeCheckout::getInstance()->webhookService->handleEvent($webhook);
+
+        if (!$handled) {
+            Craft::$app->response->setStatusCode(400);
+            return $this->asJson(['success' => false, 'reason' => 'Event couldn’t be handled.']);
+        }
+
+        Craft::$app->response->setStatusCode(200);
+        return $this->asJson(['success' => true]);
     }
 }

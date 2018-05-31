@@ -1,0 +1,22 @@
+{% extends "checkout/_layouts/main" %}
+
+{% set charge = craft.app.session.getFlash('charge') %}
+{% set errors = craft.app.session.getFlash('errors') %}
+
+{% block content %}
+
+  {% if charge %}
+    <div class="bg-green-lightest p-8 text-green-dark overflow-x-scroll">
+      <pre>{{ charge|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+    </div>
+  {% elseif errors %}
+    <div class="bg-red-lightest p-8 text-red-dark overflow-x-scroll">
+      <pre>{{ errors|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+    </div>
+  {% else %}
+    <div class="bg-red-lightest p-8 text-red-dark">
+      <pre>Charge data not available.</pre>
+    </div>
+  {% endif %}
+
+{% endblock %}

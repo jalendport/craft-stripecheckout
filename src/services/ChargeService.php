@@ -4,79 +4,197 @@
  *
  * Bringing the power of Stripe Checkout to your Craft templates.
  *
- * @link      https://github.com/lukeyouell
- * @copyright Copyright (c) 2017 Luke Youell
+ * @link      https://github.com/lukeyouell/craft-stripecheckout
+ * @copyright Copyright (c) 2018 Luke Youell
  */
 
 namespace lukeyouell\stripecheckout\services;
 
 use lukeyouell\stripecheckout\StripeCheckout;
+use lukeyouell\stripecheckout\elements\Charge;
+use lukeyouell\stripecheckout\elements\db\ChargeQuery;
+use lukeyouell\stripecheckout\events\ChargeEvent;
 
 use Craft;
 use craft\base\Component;
-use lukeyouell\stripecheckout\services\ChargeService;
-use lukeyouell\stripecheckout\events\saveEvent;
+use craft\helpers\Json;
 
-/**
- * @author    Luke Youell
- * @package   StripeCheckout
- * @since     1.0.0
- */
+use yii\base\Exception;
+use yii\web\NotFoundHttpException;
+
 class ChargeService extends Component
 {
-    
-    const EVENT_BEFORE_SAVE = 'beforeSave';
-    const EVENT_AFTER_SAVE = 'afterSave';
+    // Constants
+    // =========================================================================
 
+    const EVENT_BEFORE_CHARGE = 'beforeCharge';
 
-    
+    const EVENT_AFTER_CHARGE = 'afterCharge';
+
     // Public Methods
     // =========================================================================
 
-    public static function createCharge($request)
+    public function createCharge($request)
     {
-        $event = new SaveEvent([
-            'data' => $request
+        // Extra stripe charge request params, can be set with the BEFORE_CHARGE event
+        $additional = [];
+
+        // Trigger beforeCharge event
+        $event = new ChargeEvent([
+            'request' => $request,
         ]);
         $self = new static;
-        $self->trigger(self::EVENT_BEFORE_SAVE, $event);
+        $self->trigger(self::EVENT_BEFORE_CHARGE, $event);
 
-        $settings = StripeCheckout::$plugin->getSettings();
-        $secretKey = $settings->accountMode === 'live' ? $settings->liveSecretKey : $settings->testSecretKey;
+        $response = $this->createStripeCharge($request, $additional);
+
+        if ((!isset($response['charge'])) or (isset($response['message']))) {
+            return $response;
+        }
+
+        $charge = $this->insertCharge($response['charge']);
+
+        if (!$charge) {
+            throw new Exception('Couldn’t create the charge element.');
+        }
+
+        // Trigger afterCharge event
+        $event = new ChargeEvent([
+            'request' => $request,
+            'charge'  => $charge,
+        ]);
+        $self = new static;
+        $self->trigger(self::EVENT_AFTER_CHARGE, $event);
+
+        return $charge;
+    }
+
+    public function createStripeCharge($request, $additional = [])
+    {
+        $secretKey = StripeCheckout::getInstance()->settingsService->getSecretKey();
+
         \Stripe\Stripe::setApiKey($secretKey);
 
         $response = [];
 
         try {
-
-          $response['charge'] = \Stripe\Charge::create([
-            'source' => $request['token'],
-            'receipt_email' => $request['email'],
-            'amount' => $request['options']['amount'],
-            'currency' => isset($request['options']['currency']) ? $request['options']['currency'] : $settings->defaultCurrency,
-            'description' => isset($request['options']['description']) ? $request['options']['description'] : null,
-            'shipping' => $request['shipping'],
-            'metadata' => $request['metadata']
-          ]);
-
-          $response['success'] = true;
-
+            $response['charge'] = \Stripe\Charge::create([
+                'source'        => $request['token'],
+                'receipt_email' => $request['email'],
+                'amount'        => $request['options']['amount'],
+                'currency'      => $request['options']['currency'],
+                'description'   => $request['options']['description'],
+                'shipping'      => $request['shipping'],
+                'metadata'      => $request['metadata'],
+            ], $additional);
         } catch (\Stripe\Error\Base $e) {
-          Craft::$app->getErrorHandler()->logException($e);
-          $response['success'] = false;
-          $response['message'] = $e->getMessage();
+            Craft::$app->getErrorHandler()->logException($e);
+
+            $body = $e->getJsonBody();
+            $response = $body['error'];
+
+            $response['message'] = $e->getMessage();
         } catch (Exception $e) {
-          Craft::$app->getErrorHandler()->logException($e);
-          $response['success'] = false;
-          $response['message'] = $e->getMessage();
+            Craft::$app->getErrorHandler()->logException($e);
+            $response['message'] = $e->getMessage();
         }
 
-        $event = new SaveEvent([
-            'data' => $request,
-            'record' => $response
-        ]);
-        $self = new static;
-        $self->trigger(self::EVENT_AFTER_SAVE, $event);
         return $response;
+    }
+
+    public function insertCharge($stripeCharge = null)
+    {
+        if ($stripeCharge) {
+            // Update charge if it already exists
+            $exists = $this->getChargeByStripeId($stripeCharge->id);
+
+            if ($exists) {
+                $res = $this->updateCharge($stripeCharge);
+
+                if ($res) {
+                    return true;
+                }
+            } else {
+                $charge = new Charge();
+
+                $charge->stripeId       = $stripeCharge->id ?? null;
+                $charge->email          = $stripeCharge->receipt_email ?? null;
+                $charge->live           = $stripeCharge->livemode ?? null;
+                $charge->chargeStatus   = $stripeCharge->status ?? null;
+                $charge->paid           = $stripeCharge->paid ?? null;
+                $charge->refunded       = $stripeCharge->refunded ?? null;
+                $charge->amount         = $stripeCharge->amount ?? null;
+                $charge->amountRefunded = $stripeCharge->amount_refunded ?? null;
+                $charge->currency       = $stripeCharge->currency ?? null;
+                $charge->description    = $stripeCharge->description ?? null;
+                $charge->failureCode    = $stripeCharge->failure_code ?? null;
+                $charge->failureMessage = $stripeCharge->failure_message ?? null;
+                $charge->data           = $stripeCharge ? Json::encode($stripeCharge) : null;
+
+                $res = Craft::$app->getElements()->saveElement($charge, true, false);
+
+                if ($res) {
+                    return $charge;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public function updateCharge($stripeCharge = null)
+    {
+        if ($stripeCharge) {
+            $charge = $this->getChargeByStripeId($stripeCharge->id);
+
+            if (!$charge) {
+                return null;
+            }
+
+            $charge->email          = $stripeCharge->receipt_email ?? null;
+            $charge->live           = $stripeCharge->livemode ?? null;
+            $charge->chargeStatus   = $stripeCharge->status ?? null;
+            $charge->paid           = $stripeCharge->paid ?? null;
+            $charge->refunded       = $stripeCharge->refunded ?? null;
+            $charge->amount         = $stripeCharge->amount ?? null;
+            $charge->amountRefunded = $stripeCharge->amount_refunded ?? null;
+            $charge->currency       = $stripeCharge->currency ?? null;
+            $charge->description    = $stripeCharge->description ?? null;
+            $charge->failureCode    = $stripeCharge->failure_code ?? null;
+            $charge->failureMessage = $stripeCharge->failure_message ?? null;
+            $charge->data           = $stripeCharge ? Json::encode($stripeCharge) : null;
+
+            $res = Craft::$app->getElements()->saveElement($charge, true, false);
+
+            if ($res) {
+                return $charge;
+            }
+        }
+
+        return null;
+    }
+
+    public function getChargeById($id = null)
+    {
+        if ($id) {
+            $query = new ChargeQuery(Charge::class);
+            $query->id = $id;
+
+            return $query->one();
+        }
+
+        return null;
+    }
+
+    public function getChargeByStripeId($id = null)
+    {
+        if ($id) {
+            $query = new ChargeQuery(Charge::class);
+            $query->stripeId = $id;
+
+            return $query->one();
+        }
+
+        return null;
     }
 }

@@ -1,0 +1,45 @@
+{% extends "stripe-checkout/_layouts/settings" %}
+
+{% set fullPageForm = true %}
+
+{% import "_includes/forms" as forms %}
+{% import "stripe-checkout/_macros/settings" as macros %}
+
+{% block content %}
+
+  {{ forms.hidden({
+        name: 'action',
+        value: 'plugins/save-plugin-settings'
+    })}}
+
+    {{ forms.hidden({
+        name: 'pluginHandle',
+        value: plugin.handle
+    })}}
+
+  <h2 class="first">General Settings</h2>
+
+  {{ forms.textField({
+      first:        true,
+      label:        'Plugin Name Override',
+      instructions: 'The plugin name as you’d like it to be displayed in the CP.',
+      id:           'pluginNameOverride',
+      name:         'settings[pluginNameOverride]',
+      placeholder:  plugin.name,
+      value:        settings.pluginNameOverride,
+      disabled:     'pluginNameOverride' in overrides,
+      warning:      'pluginNameOverride' in overrides ? macros.configWarning('pluginNameOverride'),
+  })}}
+
+
+  {{ forms.selectField({
+      label:    'Default Currency',
+      id:       'defaultCurrency',
+      name:     'settings[defaultCurrency]',
+      options:  currencyOptions,
+      value:    settings.defaultCurrency,
+      disabled: 'defaultCurrency' in overrides,
+      warning:  'defaultCurrency' in overrides ? macros.configWarning('defaultCurrency'),
+  })}}
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "checkout/_layouts/main" %}
+
+{% set charges = craft.stripecheckout.charges.all() %}
+
+{% block content %}
+
+  {% if charges %}
+    <div class="bg-white p-8 pb-4">
+      <h1 class="text-2xl font-light mb-4">Charges</h1>
+
+      {% for charge in charges %}
+        <div class="flex text-sm text-grey-dark {% if not loop.last %}border-grey border-dotted border-b{% endif %}">
+          <div class="flex-grow py-4">
+            <a class="text-green-dark no-underline hover:underline" href="charge?id={{ charge.id }}">{{ charge.stripeId }}</a>
+          </div>
+          <div class="flex-shrink py-4">
+            {{ charge.formattedAmount }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="bg-red-lightest p-8 text-red-dark">
+      <pre>No charges found.</pre>
+    </div>
+  {% endif %}
+
+{% endblock %}

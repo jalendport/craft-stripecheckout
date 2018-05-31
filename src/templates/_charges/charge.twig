@@ -1,0 +1,58 @@
+{% extends "_layouts/cp" %}
+
+{% do view.registerAssetBundle("lukeyouell\\stripecheckout\\assetbundles\\ChargeBundle") %}
+
+{% block actionButton %}
+  <div class="buttons">
+    <span class="btn" onClick="window.location.reload()" data-icon="refresh" title="Refresh"></span>
+    <a class="btn submit" href="{{ charge.stripeUrl }}" target="_blank" data-icon="view">View on Stripe</a>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div>
+  <div id="overview">
+    {% include "stripe-checkout/_charges/partials/outcome" %}
+
+    {% include "stripe-checkout/_charges/partials/paymentDetails" %}
+
+    {% include "stripe-checkout/_charges/partials/metadata" %}
+
+    {% include "stripe-checkout/_charges/partials/source" %}
+  </div>
+
+  <div id="refunds" class="hidden">
+    {% include "stripe-checkout/_charges/partials/refunds" %}
+  </div>
+
+  <div id="data" class="hidden">
+    {% include "stripe-checkout/_charges/partials/data" %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block details %}
+
+  <div class="meta read-only">
+    <div class="data">
+      <div class="heading">
+        Created
+      </div>
+      <div class="value">
+        {{ charge.dateCreated|datetime('short') }}
+      </div>
+    </div>
+
+    <div class="data">
+      <div class="heading">
+        Updated
+      </div>
+      <div class="value">
+        {{ charge.dateCreated|datetime('short') }}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

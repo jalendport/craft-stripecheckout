@@ -4,8 +4,8 @@
  *
  * Bringing the power of Stripe Checkout to your Craft templates.
  *
- * @link      https://github.com/lukeyouell
- * @copyright Copyright (c) 2017 Luke Youell
+ * @link      https://github.com/lukeyouell/craft-stripecheckout
+ * @copyright Copyright (c) 2018 Luke Youell
  */
 
 namespace lukeyouell\stripecheckout\controllers;
@@ -13,23 +13,15 @@ namespace lukeyouell\stripecheckout\controllers;
 use lukeyouell\stripecheckout\StripeCheckout;
 
 use Craft;
+use craft\helpers\StringHelper;
 use craft\web\Controller;
-use lukeyouell\stripecheckout\services\RecordService;
-use lukeyouell\stripecheckout\services\ChargeService;
-use lukeyouell\stripecheckout\services\SecurityService;
 
-/**
- * @author    Luke Youell
- * @package   StripeCheckout
- * @since     1.0.0
- */
 class ChargeController extends Controller
 {
-
     // Protected Properties
     // =========================================================================
 
-    protected $allowAnonymous = true;
+    protected $allowAnonymous = ['index'];
 
     // Public Methods
     // =========================================================================
@@ -38,42 +30,49 @@ class ChargeController extends Controller
     {
         $this->requirePostRequest();
 
-        $settings = StripeCheckout::$plugin->getSettings();
         $request = Craft::$app->getRequest();
+        $stripeOptions = unserialize(StringHelper::decdec($request->getRequiredBodyParam('stripeOptions')));
 
         $stripeRequest = [];
         $stripeRequest['token'] = $request->getRequiredBodyParam('stripeToken');
         $stripeRequest['email'] = $request->getRequiredBodyParam('stripeEmail');
-        $stripeRequest['options'] = SecurityService::decrypt($request->getRequiredBodyParam('stripeOptions'));
+        $stripeRequest['options'] = $stripeOptions;
         $stripeRequest['shipping'] = [
-          'name' => $request->post('stripeShippingName'),
-          'address' => [
-            'line1' => $request->post('stripeShippingAddressLine1'),
-            'city' => $request->post('stripeShippingAddressCity'),
-            'state' => $request->post('stripeShippingAddressState'),
-            'country' => $request->post('stripeShippingAddressCountry'),
-            'postal_code' => $request->post('stripeShippingAddressZip')
-          ]
+            'name' => $request->post('stripeShippingName'),
+            'address' => [
+                'line1' => $request->post('stripeShippingAddressLine1'),
+                'city' => $request->post('stripeShippingAddressCity'),
+                'state' => $request->post('stripeShippingAddressState'),
+                'country' => $request->post('stripeShippingAddressCountry'),
+                'postal_code' => $request->post('stripeShippingAddressZip')
+            ]
         ];
 
-        $metadataKeys = isset($stripeRequest['options']['metadata']) ? $stripeRequest['options']['metadata'] : [];
         $stripeRequest['metadata'] = [];
+        $metadata = isset($stripeRequest['options']['metadata']) ? $stripeRequest['options']['metadata'] : [];
 
-        foreach ($metadataKeys as $key)
-        {
-          $stripeRequest['metadata'][$key] = is_array($request->post($key)) ? implode(', ', $request->post($key)) : $request->post($key);
+        foreach ($metadata as $key) {
+            $stripeRequest['metadata'][$key] = is_array($request->post($key)) ? StringHelper::toString($request->post($key)) : $request->post($key);
         }
 
-        $response = ChargeService::createCharge($stripeRequest);
+        $response = StripeCheckout::getInstance()->chargeService->createCharge($stripeRequest);
 
-        if ($response['success'])
-        {
-          $record = RecordService::insertCharge($response['charge']);
-          Craft::$app->session->setFlash('charge', $response['charge']);
-          return $request->post('redirect') ? $this->redirectToPostedUrl($response['charge']) : $this->asJson($response['charge']);
+        if (!isset($response->id)) {
+            if ($request->getAcceptsJson()) {
+                return $this->asJson($response);
+            }
+
+            Craft::$app->session->setFlash('errors', $response);
+            Craft::$app->getSession()->setError('Couldn’t create the charge.');
         } else {
-          Craft::$app->getSession()->setError($response['message']);
-          return null;
+            if ($request->getAcceptsJson()) {
+                return $this->asJson($response);
+            }
+
+            Craft::$app->session->setFlash('charge', $response);
+            Craft::$app->getSession()->setNotice('Charge created.');
         }
+
+        return $this->redirectToPostedUrl();
     }
 }

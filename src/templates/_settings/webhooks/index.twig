@@ -1,0 +1,18 @@
+{% extends "stripe-checkout/_layouts/settings" %}
+
+{% set fullPageForm = true %}
+
+{% import "_includes/forms" as forms %}
+
+{% block content %}
+
+  <h2 class="first">Webhooks</h2>
+
+  {{ forms.textField({
+      first:        true,
+      label:        'Endpoint',
+      instructions: 'Use this URL when setting up your Stripe Webhook.',
+      value:        webhookUrl,
+  })}}
+
+{% endblock %}
