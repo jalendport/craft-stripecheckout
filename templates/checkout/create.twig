@@ -4,10 +4,7 @@
     amount:          500,
     label:           'Proceed Payment',
     name:            'Stripe Checkout',
-    description:     'Your Order',
-    email:           'luke@checkout.test',
-    allowRememberMe: true,
-    metadata:        ['shippingComments'],
+    metadata:        ['orderComments'],
 } %}
 
 {% block content %}
@@ -43,7 +40,7 @@
 
       <div class="pt-4">
         <label class="block text-sm text-grey-dark mb-2">Comments</label>
-        <textarea class="appearance-none resize-none w-full h-24 p-4 text-sm border-grey-light border-solid border rounded" name="shippingComments"></textarea>
+        <textarea class="appearance-none resize-none w-full h-24 p-4 text-sm border-grey-light border-solid border rounded" name="orderComments"></textarea>
       </div>
     </div>
 
