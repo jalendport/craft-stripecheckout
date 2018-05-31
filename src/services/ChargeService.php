@@ -36,6 +36,9 @@ class ChargeService extends Component
 
     public function createCharge($request)
     {
+        // Extra stripe charge request params, can be set with the BEFORE_CHARGE event
+        $additional = [];
+
         // Trigger beforeCharge event
         $event = new ChargeEvent([
             'request' => $request,
@@ -43,7 +46,7 @@ class ChargeService extends Component
         $self = new static;
         $self->trigger(self::EVENT_BEFORE_CHARGE, $event);
 
-        $response = $this->createStripeCharge($request);
+        $response = $this->createStripeCharge($request, $additional);
 
         if ((!isset($response['charge'])) or (isset($response['message']))) {
             return $response;
@@ -66,7 +69,7 @@ class ChargeService extends Component
         return $charge;
     }
 
-    public function createStripeCharge($request)
+    public function createStripeCharge($request, $additional = [])
     {
         $secretKey = StripeCheckout::getInstance()->settingsService->getSecretKey();
 
@@ -83,7 +86,7 @@ class ChargeService extends Component
                 'description'   => $request['options']['description'],
                 'shipping'      => $request['shipping'],
                 'metadata'      => $request['metadata'],
-            ]);
+            ], $additional);
         } catch (\Stripe\Error\Base $e) {
             Craft::$app->getErrorHandler()->logException($e);
 
