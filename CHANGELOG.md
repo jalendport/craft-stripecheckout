@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - The ability to filter, search, sort and delete charges
 - The ability to override the plugin name
 - View raw charge data
+- Additional parameters can be inserted into the stripe charge request via the `BEFORE_CHARGE` event
 
 ### Changed
 
