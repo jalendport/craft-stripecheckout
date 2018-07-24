@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.0.2 - 2018-07-24
+
+### Fixed
+
+- Wrong value being displayed for the live secret key in the settings page ([#11](https://github.com/lukeyouell/craft-stripecheckout/issues/11))
+
 ## 2.0.1 - 2018-05-31
 
 ### Fixed
