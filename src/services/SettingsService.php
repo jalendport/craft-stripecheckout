@@ -49,7 +49,7 @@ class SettingsService extends Component
     {
         $settings = $this->settings;
 
-        $key = $settings->accountMode == 'live' ? $settings->livePublishableKey : $settings->testPublishableKey;
+        $key = Craft::parseEnv($settings->accountMode == 'live' ? $settings->livePublishableKey : $settings->testPublishableKey);
 
         return $key;
     }
@@ -58,7 +58,7 @@ class SettingsService extends Component
     {
         $settings = $this->settings;
 
-        $key = $settings->accountMode == 'live' ? $settings->liveSecretKey : $settings->testSecretKey;
+        $key = Craft::parseEnv($settings->accountMode == 'live' ? $settings->liveSecretKey : $settings->testSecretKey);
 
         return $key;
     }
