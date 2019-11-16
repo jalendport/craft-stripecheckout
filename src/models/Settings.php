@@ -4,13 +4,13 @@
  *
  * Bringing the power of Stripe Checkout to your Craft templates.
  *
- * @link      https://github.com/lukeyouell/craft-stripecheckout
- * @copyright Copyright (c) 2018 Luke Youell
+ * @link      https://github.com/jalendport/craft-stripecheckout
+ * @copyright Copyright (c) 2018 Jalen Davenport
  */
 
-namespace lukeyouell\stripecheckout\models;
+namespace jalendport\stripecheckout\models;
 
-use lukeyouell\stripecheckout\StripeCheckout;
+use jalendport\stripecheckout\StripeCheckout;
 
 use Craft;
 use craft\base\Model;
