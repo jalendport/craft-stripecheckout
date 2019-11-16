@@ -4,11 +4,11 @@
  *
  * Bringing the power of Stripe Checkout to your Craft templates.
  *
- * @link      https://github.com/lukeyouell/craft-stripecheckout
- * @copyright Copyright (c) 2018 Luke Youell
+ * @link      https://github.com/jalendport/craft-stripecheckout
+ * @copyright Copyright (c) 2018 Jalen Davenport
  */
 
-namespace lukeyouell\stripecheckout\events;
+namespace jalendport\stripecheckout\events;
 
 use yii\base\Event;
 

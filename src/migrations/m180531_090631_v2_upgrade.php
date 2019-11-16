@@ -1,10 +1,10 @@
 <?php
 
-namespace lukeyouell\stripecheckout\migrations;
+namespace jalendport\stripecheckout\migrations;
 
-use lukeyouell\stripecheckout\StripeCheckout;
-use lukeyouell\stripecheckout\elements\Charge;
-use lukeyouell\stripecheckout\elements\db\ChargeQuery;
+use jalendport\stripecheckout\StripeCheckout;
+use jalendport\stripecheckout\elements\Charge;
+use jalendport\stripecheckout\elements\db\ChargeQuery;
 
 use Craft;
 use craft\db\Migration;

@@ -4,16 +4,16 @@
  *
  * Bringing the power of Stripe Checkout to your Craft templates.
  *
- * @link      https://github.com/lukeyouell/craft-stripecheckout
- * @copyright Copyright (c) 2018 Luke Youell
+ * @link      https://github.com/jalendport/craft-stripecheckout
+ * @copyright Copyright (c) 2018 Jalen Davenport
  */
 
-namespace lukeyouell\stripecheckout;
+namespace jalendport\stripecheckout;
 
-use lukeyouell\stripecheckout\elements\Charge as ChargeElement;
-use lukeyouell\stripecheckout\models\Settings;
-use lukeyouell\stripecheckout\twigextensions\StripeCheckoutTwigExtension;
-use lukeyouell\stripecheckout\variables\StripeCheckoutVariable;
+use jalendport\stripecheckout\elements\Charge as ChargeElement;
+use jalendport\stripecheckout\models\Settings;
+use jalendport\stripecheckout\twigextensions\StripeCheckoutTwigExtension;
+use jalendport\stripecheckout\variables\StripeCheckoutVariable;
 
 use Craft;
 use craft\base\Plugin;
@@ -106,10 +106,10 @@ class StripeCheckout extends Plugin
 
         // Register components
         $this->setComponents([
-            'chargeService'   => \lukeyouell\stripecheckout\services\ChargeService::class,
-            'checkoutService' => \lukeyouell\stripecheckout\services\CheckoutService::class,
-            'settingsService' => \lukeyouell\stripecheckout\services\SettingsService::class,
-            'webhookService'  => \lukeyouell\stripecheckout\services\WebhookService::class,
+            'chargeService'   => \jalendport\stripecheckout\services\ChargeService::class,
+            'checkoutService' => \jalendport\stripecheckout\services\CheckoutService::class,
+            'settingsService' => \jalendport\stripecheckout\services\SettingsService::class,
+            'webhookService'  => \jalendport\stripecheckout\services\WebhookService::class,
         ]);
 
         Craft::info(

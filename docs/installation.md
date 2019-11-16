@@ -19,7 +19,7 @@ cd /path/to/project
 2. Then tell Composer to load the plugin:
 
 ```bash
-composer require lukeyouell/craft-stripecheckout
+composer require jalendport/craft-stripecheckout
 ```
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Stripe Checkout.
