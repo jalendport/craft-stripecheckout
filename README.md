@@ -1,3 +1,8 @@
+> [!WARNING]
+> This plugin has been abandoned.
+
+---
+
 <img src="src/icon.svg" alt="icon" width="100" height="100">
 
 # Stripe Checkout plugin for Craft CMS 3
